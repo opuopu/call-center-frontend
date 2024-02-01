@@ -1,0 +1,33 @@
+.leader-dropdown-btn {
+  font-size: 20px;
+  font-weight: 500;
+  color: #54c999;
+}
+
+.btn:hover {
+  color: #54c999 !important;
+}
+
+.btn:focus {
+  outline: 0;
+  box-shadow: none !important;
+}
+
+@media screen and (max-width: 875px) {
+  .leader-dropdown-btn {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 485px) {
+  .leader-dropdown-btn {
+    font-size: 12px;
+  }
+}
+
+
+@media screen and (max-width: 310px) {
+  .leader-dropdown-btn{
+      font-size: 10px;
+  }    
+}

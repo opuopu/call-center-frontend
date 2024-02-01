@@ -1,0 +1,79 @@
+.user-form {
+  width: fit-content;
+  border: 1px solid rgba(0, 0, 0, 0.1) lack;
+  padding: 1.2rem;
+  border-radius: 14px;
+  box-shadow: 2px 2px 15px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+
+.user-input {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.8rem;
+  width: 350px;
+  margin: 4px;
+  border-radius: 8px;
+  outline: none;
+}
+
+.user-input:focus-visible {
+  border: 1px solid #54c999 !important;
+}
+
+.user-label {
+  margin-top: 14px;
+  font-size: 16px;
+}
+
+.user-btn {
+  border: 1px solid #c89c32;
+  background-color: #c89c32;
+  color: white;
+  padding: 8px;
+  margin: 8px;
+  font-weight: bold;
+  align-self: flex-start;
+}
+
+
+.small-sub-heading{
+  font-weight: bold;
+  font-size: 22px;
+}
+
+#user-select{
+  
+}
+
+
+
+@media screen and (max-width: 480px) {
+  
+
+  .user-input{
+    width:300px
+  }
+}
+
+@media screen and (max-width: 367px) {
+
+  
+  .user-input{
+    width:260px
+  }
+}
+
+@media screen and (max-width: 330px) {
+  
+  .user-input{
+    width: 250px;
+    padding: 0.4rem;
+  }
+
+  .user-label{
+    font-size: 14px;
+  }
+
+
+}

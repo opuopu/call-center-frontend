@@ -1,0 +1,52 @@
+.difficulty-heading p:first-child {
+  color: #063b6d;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.difficulty-heading p:last-child {
+  color: #54c999;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.difficulty-para {
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.star-container-child {
+  width: 300px;
+  height: 270px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+}
+
+.difficulty-star-img {
+  width: 35px;
+  margin: 2px;
+}
+
+.blue-button-shadow {
+  box-shadow: 0px 5px 0px 0px #052f57;
+}
+
+.green-button-shadow {
+  box-shadow: 0px 5px 0px 0px #4ebb8e;
+}
+
+
+@media screen and (max-width:320px) {
+    .star-container-child{
+        width: 250px;
+    }
+
+    .difficulty-para{
+        font-size: 22px;
+    }
+}

@@ -1,0 +1,31 @@
+.Speaker-Input {
+  width: 72% !important;
+  min-width: 200px;
+  /* margin: auto; */
+}
+
+.Speaker-Input-2 {
+  width: 17% !important;
+  min-width: 200px;
+  /* margin: auto; */
+}
+
+.mic-parent {
+  padding: 0px 15px;
+}
+
+.mic-parent p {
+  font-size: 18px;
+  font-weight: bold;
+  width: 40%;
+  min-width: 150px;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.form-control {
+  font-weight: bold;
+}
