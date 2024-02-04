@@ -8,8 +8,11 @@ import ProfileImage from "../../assets/Group 1.png";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { currentUserData, setNavBar } from "../../Redux/uReducer";
+// import { currentUserData, setNavBar } from "../../Redux/uReducer";
 import { SERVERURL } from "../../ServerUrl";
+import { logout, useCurrentUser } from "../../Redux/features/auth/authSlice";
+
+
 function NavbarCompo() {
   let Navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,28 +30,14 @@ function NavbarCompo() {
 
   // Now the hamburger is hidden now we need to look for dashboard in wc web
   // I want to ask to the bro that how
-  const handleLogout = () => {
-    let fm = new FormData();
-    SERVERURL.post(
-      "auth/token/logout/",
+  const navigate = useNavigate()
 
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencode",
-          Authorization: `TOKEN ${User?.token?.auth_token}`,
-        },
-      }
-    )
-      .then((res) => {
-        sessionStorage.removeItem("clientToken");
-        dispatch(currentUserData(null));
-        // dispatch(setNavBar(false));
-        Navigate("/user-login");
-      })
-      .catch((err) => {
-        console.log("not logout");
-      });
+  const handleLogout = () => {
+    dispatch(logout())
+    navigate("/user-login")
   };
+
+  const user = useSelector(useCurrentUser)
 
   useEffect(() => {
     if (
@@ -108,8 +97,8 @@ function NavbarCompo() {
             {/* <button className="nav-btn mx-2">Get Started</button>
               <button className="nav-btn mx-2">Login</button> */}
             <div className="profile-text-container mx-2 d-flex justify-content-end align-items-center flex-column">
-              <span className="align-self-end">User 2000</span>
-              <span>Company Name</span>
+              <span className="align-self-end">{user?.name}</span>
+              <span>{user?.managerId?.name ? user?.managerId?.name : user?.role}</span>
             </div>
 
             <div class="dropdown ">

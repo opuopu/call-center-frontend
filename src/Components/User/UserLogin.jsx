@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import swal from "sweetalert";
-// import Stripe from "stripe";
 import qs from "qs";
 import Swal from "sweetalert2";
 import "./User.css";
-import { currentUserData } from "../../Redux/uReducer";
 import { useDispatch } from "react-redux";
 import { SERVERURL } from "../../ServerUrl";
 import { useNavigate } from "react-router-dom";
+import { useSignInMutation } from "../../Redux/api/authApi";
+import { setUser } from "../../Redux/features/auth/authSlice";
+
+
 function UserLogin() {
   const dispatch = useDispatch();
   const Navigate = useNavigate();
@@ -16,28 +18,29 @@ function UserLogin() {
     email: "",
     password: "",
   });
+
+  const [signInUser, { isLoading, isError, isSuccess }] = useSignInMutation()
+
+
   const newHandleClick = async (e) => {
     e.preventDefault();
-    let stringy = qs.stringify(inputData);
-    let formData = new FormData();
-    formData.append("email", inputData.email);
-    formData.append("password", inputData.password);
+
+    console.log("inputData", inputData)
+
     try {
-      const response = await SERVERURL.post("auth/token/login/", formData, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencode",
-        },
-      });
+      const response = await signInUser(inputData).unwrap();
+      console.log("res", response)
       if (response) {
-        console.log(response?.data?.token?.auth_token);
-        sessionStorage.setItem(
-          "clientToken",
-          response?.data?.token?.auth_token
-        );
-        dispatch(currentUserData(response?.data));
-        Swal.fire("Login successfully", "", "success");
-        Navigate("/");
+        const userInfo = {
+          ...response.data.user
+        }
+        delete userInfo.password;
+        // delete userInfo._id;
+        dispatch(setUser({ token: response?.data?.accessToken, user: userInfo }))
       }
+      Swal.fire("Login successfully", "", "success");
+      Navigate("/");
+
     } catch (err) {
       console.log(err);
       Swal.fire(
@@ -68,7 +71,7 @@ function UserLogin() {
       console.log("response", response);
 
       if (response?.data?.status) {
-        dispatch(currentUserData(response?.data?.user));
+        // dispatch(currentUserData(response?.data?.user));
         swal("Successfully", response?.data?.message, "success");
       }
     } catch (error) {

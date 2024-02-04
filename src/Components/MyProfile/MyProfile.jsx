@@ -4,6 +4,7 @@ import ProfilePic from "../../assets/Group 1.png";
 import C3Context from "../../Context/C3Context.";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useProfileQuery } from "../../Redux/api/authApi";
 
 function MyProfileComp() {
   const { getProfiledata, changeProfile } = useContext(C3Context);
@@ -15,22 +16,16 @@ function MyProfileComp() {
   });
   const [file, setFile] = useState("");
 
-  useEffect(() => {
-    getProfiledata().then((data) => {
-      console.log("profile data: ", data);
 
-      setProfileValues({
-        name: data?.data?.user?.first_name,
-        userName: data?.data?.user?.username,
-        email: data?.data?.user?.email,
-        image_url: data?.data?.image_url,
-      });
-    });
-  }, []);
 
   const handleOnChange = (e) => {
     setProfileValues({ ...profileValues, [e.target.name]: e.target.value });
   };
+
+
+  const { data: profileData, isLoading, isSuccess } = useProfileQuery(undefined);
+
+  console.log(profileData)
 
   // Following function is used to updaate the user profilel:
 
@@ -127,7 +122,8 @@ function MyProfileComp() {
                 Name
               </label>
               <input
-                value={profileValues?.name}
+                // value={profileValues?.name}
+                defaultValue={profileData?.data?.name}
                 className="custom-box-style input_outline"
                 type="text"
                 id="name"
@@ -140,7 +136,7 @@ function MyProfileComp() {
                 User Name
               </label>
               <input
-                value={profileValues?.userName}
+                defaultValue={profileData?.data?.userName}
                 className="custom-box-style input_outline"
                 type="text"
                 id="username"
@@ -153,7 +149,7 @@ function MyProfileComp() {
                 Email
               </label>
               <input
-                value={profileValues?.email}
+                defaultValue={profileData?.data?.email}
                 className="custom-box-style input_outline"
                 type="text"
                 id="email"
@@ -171,6 +167,7 @@ function MyProfileComp() {
                 Current Password
               </label>
               <input
+                defaultValue={profileData?.data?.password}
                 className="custom-box-style input_outline"
                 type="text"
                 id="name"

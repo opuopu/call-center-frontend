@@ -4,118 +4,120 @@ import { Container } from "react-bootstrap";
 import axios from "axios";
 import { BASE_URL } from "../ServerUrl";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSinglQuestionQuery, useSingleQuizQuery } from "../Redux/api/quizApi";
+import { useDispatch, useSelector } from "react-redux";
+import { useCurrentToken, useCurrentUser } from "../Redux/features/auth/authSlice";
+import GreatAlert from "../Components/GreatAlert/GreatAlert";
+import WrongAlert from "../Components/WrongAlert/WrongAlert";
 
 function HomeSentenceAnswer() {
-  const [allSentence, setAllSentence] = useState([]);
-  const [allAnswer, setAllAnswer] = useState([]);
-  const [selectedAnswers, setSelectedAnswers] = useState({});
-  const [isCorrect, setIsCorrect] = useState({});
+
+
+  const { id, quizId } = useParams();
+  console.log("id", quizId)
+
+  const { data: signleQuestionData, isLoading, isSuccessful } = useSinglQuestionQuery(id);
+  console.log("signle Question Data", signleQuestionData)
+
+
+
+  const { data: signleQuizData } = useSingleQuizQuery(quizId);
+  console.log("Signle Quiz Data", signleQuizData?.data?.questions?.length)
+  console.log("Signle Quiz Data", signleQuizData?.data)
+
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(signleQuizData?.data?.questions[0]);
+
+  console.log(currentQuestion)
+
   useEffect(() => {
-    let config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url: `${BASE_URL}/api/v1/exercise/sentences/`,
-      headers: {
-        Authorization: `Token ${sessionStorage?.getItem("clientToken")}`,
-      },
-    };
+    setCurrentQuestion(signleQuizData?.data?.questions[currentQuestionIndex])
+  }, [currentQuestionIndex, signleQuizData?.data?.questions])
 
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(response.data);
-        let ans = [];
-        response.data.map((d) => {
-          ans.push("");
-        });
-        setAllAnswer(ans);
-        setAllSentence(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  // Function to handle answer selection
-  const handleAnswerSelection = (questionId, selectedOption) => {
-    setSelectedAnswers((prevSelectedAnswers) => ({
-      ...prevSelectedAnswers,
-      [questionId]: selectedOption,
-    }));
-
-    // Check if the selected answer is correct
-    setIsCorrect((prevIsCorrect) => ({
-      ...prevIsCorrect,
-      [questionId]:
-        selectedOption ===
-        allSentence.find((mcq) => mcq.id === questionId).correct,
-    }));
+  const handleNextQuestion = () => {
+    if (currentQuestionIndex === signleQuizData?.data?.questions?.length - 1) {
+      return
+    }
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
   };
+
+  const handlePreQuestion = () => {
+    if (currentQuestionIndex === 0) {
+      return
+    }
+    setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
+  };
+
+  console.log(currentQuestionIndex)
+  // _________________________________Ans APi--------------------------
+
+  const [apiStatus, setApiStatus] = useState(null);
+
+  const user = useSelector(useCurrentUser)
+  console.log(user);
+  const token = useSelector(useCurrentToken)
+  console.log(token);
+
+  const handleButtonClick = async (index) => {
+    console.log("Index", index);
+    try {
+      const apiUrl = `http://192.168.10.14:3000/api/quiz/quizzes/${quizId}/${id}/${index}`;
+      const postData = {
+        managerId: user._id,
+      };
+
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(postData),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        setApiStatus(responseData?.data?.isCorrect ? 'true' : 'false');
+        console.log('API response:', responseData?.data?.isCorrect);
+      } else {
+        console.error('API request failed:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('An error occurred while making the API request:', error);
+    }
+  };
+
   return (
     <>
       <ProgressBar />
 
       <Container className="d-flex justify-content-start align-items-center flex-column mic-parent flex-wrap">
         <p
-          style={{ fontWeight: "400", fontSize: "22px" }}
-          className="w-auto mx-1"
-        >
-          Complete Sentence
+          style={{ fontWeight: "400", fontSize: "22px", textAlign: "center" }}>
+          {/* {signleQuestionData?.data?.question} */}
+          {currentQuestion?.question}
         </p>
-        {allSentence.map((d, index) => {
+
+        {currentQuestion?.answers?.map((elem, index) => {
           return (
             <>
-              <div style={{ height: "15vh" }}>
-                <div className="complete-sentence my-2">
-                  <p style={{ width: "fit-content" }} className="m-0">
-                    {d?.text}
-                  </p>
-                </div>
-              </div>
-              <div className="complete-btn-container">
-                {d?.options?.map((da, i) => {
-                  return (
-                    <button
-                      className={`gray-shadow-btn my-2 ${
-                        allAnswer[index] == ""
-                          ? ""
-                          : allAnswer[index] == da.correct
-                          ? "green-btn green-button-shadow answer-correct-box"
-                          : "success-outline"
-                      }`}
-                      style={{
-                        backgroundColor:
-                          selectedAnswers[d.id] === da
-                            ? isCorrect[d.id]
-                              ? "green"
-                              : "red"
-                            : "white",
-                      }}
-                      onClick={() => handleAnswerSelection(d.id, da)}
-                    >
-                      {da}
-                    </button>
-                  );
-                })}
-
-                {/* <button className="green-btn green-button-shadow answer-correct-box">
-            business
-          </button>
-          <button className="gray-shadow-btn my-2">great</button> */}
-              </div>
-              {/* 
-              <div
-                style={{ height: "25vh", width: "40%", minWidth: "250px" }}
-                className="d-flex justify-content-between align-items-center"
-              >
-                <button className="blue-btn blue-button-shadow">Pause</button>
-                <button className="green-btn green-button-shadow">Check</button>
-              </div> */}
+              <button style={{
+                textAlign: "start",
+                border: "none",
+                borderRadius: "8px",
+                backgroundColor: "white",
+                padding: "8px",
+                width: "48rem",
+                marginTop: "20px",
+                boxShadow: "0px 1.5px 0px 4px #ececec"
+              }} onClick={() => handleButtonClick(index)}>{elem?.text}</button>
             </>
-          );
+          )
         })}
 
-        {/* <div className="complete-btn-container">
+
+        {/* <div className="flex flex-col">
           <button className="gray-shadow-btn my-2">fiscal</button>
           <button className="green-btn green-button-shadow answer-correct-box">
             business
@@ -123,14 +125,30 @@ function HomeSentenceAnswer() {
           <button className="gray-shadow-btn my-2">great</button>
         </div> */}
 
-        {/* <div
+        <div
           style={{ height: "25vh", width: "40%", minWidth: "250px" }}
           className="d-flex justify-content-between align-items-center"
         >
-          <button className="blue-btn blue-button-shadow">Pause</button>
-          <button className="green-btn green-button-shadow">Check</button>
-        </div> */}
+          <button className="nav-btn my-4 py-2 status-btn" onClick={() => handlePreQuestion()}>Previous</button>
+          <button className="green-btn green-button-shadow py-2" onClick={() => handleNextQuestion()}>Next</button>
+        </div>
       </Container>
+
+      {apiStatus === 'true' && (
+        <>
+          <div>
+            <GreatAlert />
+          </div>
+        </>
+      )}
+
+      {apiStatus === 'false' && (
+        <>
+          <div>
+            <WrongAlert />
+          </div>
+        </>
+      )}
     </>
   );
 }

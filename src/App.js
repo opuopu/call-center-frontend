@@ -28,6 +28,7 @@ import AllTeams from "./Pages/AllTeams";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import QuizHomeSentence from "./Pages/QuizHomeSentece";
 
 function App() {
   return (
@@ -49,8 +50,15 @@ function App() {
             <Route path="/result" element={<ResultState />} />
             <Route path="/congratulations" element={<ResultCongratulation />} />
             <Route path="/home-sentence" element={<HomeSentence />} />
+            {/* ------------------------ */}
             <Route
-              path="/home-sentence-answer"
+              path="/quiz-home-sentence/:id"
+              element={<QuizHomeSentence />}
+            />
+            {/* ---------------------------- */}
+
+            <Route
+              path="/home-sentence-answer/:id/:index/:quizId"
               element={<HomeSentenceAnswer />}
             />
             <Route

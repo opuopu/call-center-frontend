@@ -10,7 +10,7 @@ export const accordionData = [
         stars:"145"
     },
     {
-        name:"Mood Guess",
+        name:"MULTIPLE-ANSWER QUESTIONS",
         level:"LEVEL 1",
         stars:"20"
     },

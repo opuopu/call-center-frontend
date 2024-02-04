@@ -4,12 +4,12 @@ import DashboardCenter from "../Components/DashboardCenter/DashboardCenter";
 import DashboardRight from "../Components/DashboardRight/DashboardRight";
 import "./Pages.css";
 import { useDispatch } from "react-redux";
-import { getExercise } from "../Redux/uReducer";
+// import { getExercise } from "../Redux/uReducer";
 
 function DashboardHome() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getExercise());
+    // dispatch(getExercise());
   }, []);
 
   return (

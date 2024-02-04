@@ -7,7 +7,7 @@ import { BASE_URL } from "../ServerUrl";
 import { BsFillMicFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 function HomeSentence() {
-  const audios = useSelector((state) => state?.CustomerReducer.audioExercise);
+  const audios = useSelector((state) => state?.CustomerReducer?.audioExercise);
   const [disable, setDisable] = useState(true);
   const [recorded, setRecorded] = useState("");
   const [audioBlob, setAudioBlob] = useState(null);
