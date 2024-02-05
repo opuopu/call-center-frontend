@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 function AccordionCompo() {
 
   const { data: quizData, isLoading, isSuccessful } = useAllQuizQuery(undefined);
-  // console.log("Quiz Data", quizData)
+  console.log("Quiz Data", quizData)
 
   const navigate = useNavigate()
 
@@ -55,12 +55,12 @@ function AccordionCompo() {
                                 <p>Context {index + 1}</p>
                                 <span className="status-star d-flex justify-content-between align-items-center">
                                   <img src={Star} alt="star" />{" "}
-                                  <span>{elem.stars}</span>{" "}
+                                  <span>{elem?.score}</span>{" "}
                                 </span>
                                 <div className="d-flex justify-content-center align-items-center my-4 flex-column">
                                   <ProgressBar
                                     now={80}
-                                    label={`${80}%`}
+                                    label={`${60}%`}
                                     visuallyHidden
                                     className="w-100"
                                   />{" "}
