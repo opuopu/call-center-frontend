@@ -17,7 +17,7 @@ function DashboardHome() {
       <div className="d-flex justify-content-between dashboard-home">
         <DashboardSidebar />
         <DashboardCenter />
-        <DashboardRight />
+        {/* <DashboardRight /> */}
       </div>
     </>
   );

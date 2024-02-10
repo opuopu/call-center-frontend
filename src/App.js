@@ -29,6 +29,7 @@ import "./App.css";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import QuizHomeSentence from "./Pages/QuizHomeSentece";
+import ContextWiseQus from "./Components/ContextWiseQus/ContextWiseQus";
 
 function App() {
   return (
@@ -37,7 +38,14 @@ function App() {
         <Router>
           <NavbarCompo />
           <Routes>
-            <Route exact path="/" element={<DashboardHome />} />
+            <Route exact path="/" element={<DashboardHome />} >
+
+              {/* <Route
+                path="/context-qus/:id"
+                element={<ContextWiseQus />}
+              /> */}
+
+            </Route>
             <Route exact path="/:id/:id/:id/:id" element={<MyProfile />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/my-profile" element={<MyProfile />} />
@@ -54,6 +62,11 @@ function App() {
             <Route
               path="/quiz-home-sentence/:id"
               element={<QuizHomeSentence />}
+            />
+
+            <Route
+              path="/context-qus/:id"
+              element={<ContextWiseQus />}
             />
             {/* ---------------------------- */}
 

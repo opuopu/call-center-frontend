@@ -155,10 +155,10 @@ function HomeSentenceAnswer() {
 
 
         <div
-          style={{ height: "25vh", width: "40%", minWidth: "250px" }}
-          className="d-flex justify-content-between align-items-center"
+          style={{ height: "25vh", width: "40%", minWidth: "250px", marginLeft: "250px" }}
+          className="d-flex justify-content-end align-items-center"
         >
-          <button className="nav-btn my-4 py-2 status-btn" onClick={() => handlePreQuestion()}>Previous</button>
+          {/* <button className="nav-btn my-4 py-2 status-btn" onClick={() => handlePreQuestion()}>Previous</button> */}
           <button className="green-btn green-button-shadow py-2" onClick={() => handleNextQuestion()}>Next</button>
         </div>
       </Container>

@@ -10,17 +10,25 @@ import { Link, useNavigate } from "react-router-dom";
 function AccordionCompo() {
 
   const { data: quizData, isLoading, isSuccessful } = useAllQuizQuery(undefined);
-  console.log("Quiz Data", quizData)
+  // console.log("Quiz Data", quizData)
 
   const navigate = useNavigate()
 
-  // const handleContiniue = () => {
+  // const handleNextQuestion = () => {
   //   navigate('/quiz-home-sentence', { state: { quizData } })
   // }
 
   return (
     <>
-      <Accordion
+      {quizData?.data?.result?.map((elem, index) => {
+        return (
+          <Link to={`/context-qus/${elem?._id}`}>
+            <button className="green-btn green-button-shadow py-2">Start Practice Session</button>
+          </Link>
+        )
+      })}
+
+      {/* <Accordion
         className="accordion-container"
         style={{ width: "100%" }}
         flush
@@ -75,88 +83,19 @@ function AccordionCompo() {
                               </Link>
 
                             </>
-                            {/* {elem?.status === "unlock" ? (
-                              
-                            ) : (
-                              <>
-                                <div
-                                  className="accordion-data-child accordion-data-child-2 align-self-start"
-                                  style={{
-                                    backgroundColor: "#ECECEC",
-                                    color: "black",
-                                  }}
-                                >
-                                  <p>{elem.level}</p>
-                                  <div className="unlock-accordion-child">
-                                    <img src={Star} alt="star" />{" "}
-                                    <span>{elem?.tagLine}</span>
-                                  </div>
-                                </div>
-                              </>
-                            )} */}
+
                           </div>
                         </>
                       );
                     })}
                   </div>
                 </Accordion.Body>
-                {/* <Accordion.Body>
-                  <div className="d-flex justify-content-center justify-content-md-between flex-wrap accordion-data md:my-2 align-items-center">
-                    {levelData?.map((elem) => {
-                      return (
-                        <>
-                          <div className="d-flex align-self-start my-2 justify-content-center align-items-center flex-column flex-wrap">
-                            {elem?.status === "unlock" ? (
-                              <>
-                                <div className="accordion-data-child">
-                                  <p>{elem.level}</p>
-                                  <span className="status-star d-flex justify-content-between align-items-center">
-                                    <img src={Star} alt="star" />{" "}
-                                    <span>{elem.stars}</span>{" "}
-                                  </span>
-                                  <div className="d-flex justify-content-center align-items-center my-4 flex-column">
-                                    <ProgressBar
-                                      now={80}
-                                      label={`${80}%`}
-                                      visuallyHidden
-                                      className="w-100"
-                                    />{" "}
-                                    <span>{elem?.tagLine}</span>
-                                  </div>
-                                </div>
 
-                                <button className="nav-btn my-2 py-2 status-btn">
-                                  <Link to={`/` }>{elem?.btnText}</Link>
-                                </button>
-                              </>
-                            ) : (
-                              <>
-                                <div
-                                  className="accordion-data-child accordion-data-child-2 align-self-start"
-                                  style={{
-                                    backgroundColor: "#ECECEC",
-                                    color: "black",
-                                  }}
-                                >
-                                  <p>{elem.level}</p>
-                                  <div className="unlock-accordion-child">
-                                    <img src={Star} alt="star" />{" "}
-                                    <span>{elem?.tagLine}</span>
-                                  </div>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        </>
-                      );
-                    })}
-                  </div>
-                </Accordion.Body> */}
               </Accordion.Item>
             </>
           );
         })}
-      </Accordion>
+      </Accordion> */}
     </>
   );
 }
