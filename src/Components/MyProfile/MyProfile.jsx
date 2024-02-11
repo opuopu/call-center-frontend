@@ -5,9 +5,15 @@ import C3Context from "../../Context/C3Context.";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useProfileQuery } from "../../Redux/api/authApi";
+import CustomModal from "../../UI/Modal.jsx";
 
 function MyProfileComp() {
   const { getProfiledata, changeProfile } = useContext(C3Context);
+  const [modal, setModal] = useState(false);
+  const handleModalClose = () => {
+    console.log("clicked");
+    setModal((prev) => !prev);
+  };
   const [profileValues, setProfileValues] = useState({
     name: "",
     userName: "",
@@ -16,16 +22,17 @@ function MyProfileComp() {
   });
   const [file, setFile] = useState("");
 
-
-
   const handleOnChange = (e) => {
     setProfileValues({ ...profileValues, [e.target.name]: e.target.value });
   };
 
+  const {
+    data: profileData,
+    isLoading,
+    isSuccess,
+  } = useProfileQuery(undefined);
 
-  const { data: profileData, isLoading, isSuccess } = useProfileQuery(undefined);
-
-  console.log(profileData)
+  console.log(profileData);
 
   // Following function is used to updaate the user profilel:
 
@@ -69,7 +76,7 @@ function MyProfileComp() {
   };
 
   return (
-    <>
+    <div>
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -195,7 +202,7 @@ function MyProfileComp() {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
