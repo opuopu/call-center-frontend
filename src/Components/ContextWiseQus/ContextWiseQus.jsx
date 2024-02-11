@@ -113,6 +113,7 @@ const ContextWiseQus = () => {
     const totalQuestions = signleQuizData?.data?.questions?.length - 1 || 1; // Ensure totalQuestions is at least 1
     const progress = (currentQuestionIndex / totalQuestions) * 100;
 
+
     return (
         <div>
             {/* <ProgressBar now={progress} label={`${progress.toFixed(2)}%`}></ProgressBar> */}
@@ -153,10 +154,10 @@ const ContextWiseQus = () => {
 
 
                 <div
-                    style={{ height: "25vh", width: "40%", minWidth: "250px", marginLeft: "250px" }}
-                    className="d-flex justify-content-end align-items-center"
+                    style={{ height: "25vh", width: "40%", minWidth: "250px" }}
+                    className="d-flex justify-content-between align-items-center"
                 >
-                    {/* <button className="nav-btn my-4 py-2 status-btn" onClick={() => handlePreQuestion()}>Previous</button> */}
+                    <button className="nav-btn my-4 py-2 status-btn" onClick={() => handlePreQuestion()}>Leave</button>
                     <button className="green-btn green-button-shadow py-2" onClick={() => handleNextQuestion()}>Next</button>
                 </div>
             </Container>
