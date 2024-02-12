@@ -6,14 +6,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useProfileQuery } from "../../Redux/api/authApi";
 import CustomModal from "../../UI/Modal.jsx";
+import UpdatePassword from "../UpdatePassword/UpdatePassword.jsx";
 
 function MyProfileComp() {
   const { getProfiledata, changeProfile } = useContext(C3Context);
   const [modal, setModal] = useState(false);
-  const handleModalClose = () => {
-    console.log("clicked");
+  const handleModal = () => {
     setModal((prev) => !prev);
   };
+  console.log(modal);
   const [profileValues, setProfileValues] = useState({
     name: "",
     userName: "",
@@ -31,8 +32,6 @@ function MyProfileComp() {
     isLoading,
     isSuccess,
   } = useProfileQuery(undefined);
-
-  console.log(profileData);
 
   // Following function is used to updaate the user profilel:
 
@@ -77,6 +76,11 @@ function MyProfileComp() {
 
   return (
     <div>
+      {modal && (
+        <CustomModal setShowModal={setModal} showModal={modal}>
+          <UpdatePassword setShowModal={setModal} />
+        </CustomModal>
+      )}
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -116,9 +120,27 @@ function MyProfileComp() {
             </button>
           </div>
 
-          <button className="nav-btn nav-btn-shadow save-btn my-2">
-            Save Changes
-          </button>
+          <div
+            style={{
+              display: "flex",
+              gap: "6px",
+            }}
+          >
+            <button
+              style={{
+                backgroundColor: "#54C999",
+              }}
+              className="nav-btn nav-btn-shadow save-btn my-2"
+            >
+              Save Changes
+            </button>
+            <button
+              onClick={handleModal}
+              className="nav-btn nav-btn-shadow save-btn my-2"
+            >
+              Change Password
+            </button>
+          </div>
         </div>
 
         <div className="my-5 account-container">
@@ -166,7 +188,7 @@ function MyProfileComp() {
             </div>
           </div>
         </div>
-        <div className="my-5 account-container">
+        {/* <div className="my-5 account-container">
           <h4 className="my-5">Password</h4>
           <div className="d-flex justify-content-between align-items-center flex-wrap">
             <div className="input-div">
@@ -200,7 +222,7 @@ function MyProfileComp() {
           >
             Save Changes
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
