@@ -11,13 +11,16 @@ import { useDispatch, useSelector } from "react-redux";
 // import { currentUserData, setNavBar } from "../../Redux/uReducer";
 import { SERVERURL } from "../../ServerUrl";
 import { logout, useCurrentUser } from "../../Redux/features/auth/authSlice";
-
+import ImageGenerator from "../../utils/Image.jsx";
+import { useAppSelector } from "../../Redux/hooks.js";
+import { useProfileQuery } from "../../Redux/api/authApi.js";
 
 function NavbarCompo() {
   let Navigate = useNavigate();
   const dispatch = useDispatch();
-  const User = useSelector((state) => state?.CustomerReducer?.currentUser);
-  console.log(User);
+  const User = useAppSelector(useCurrentUser);
+  const { data: profileData } = useProfileQuery(User?._id);
+
   // console.log(active, "active");
   const handleHamburger = () => {
     const sidebar = document.getElementsByClassName("nav-sidebar")[0];
@@ -30,14 +33,14 @@ function NavbarCompo() {
 
   // Now the hamburger is hidden now we need to look for dashboard in wc web
   // I want to ask to the bro that how
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logout())
-    navigate("/user-login")
+    dispatch(logout());
+    navigate("/user-login");
   };
 
-  const user = useSelector(useCurrentUser)
+  const user = useSelector(useCurrentUser);
 
   useEffect(() => {
     if (
@@ -98,7 +101,9 @@ function NavbarCompo() {
               <button className="nav-btn mx-2">Login</button> */}
             <div className="profile-text-container mx-2 d-flex justify-content-end align-items-center flex-column">
               <span className="align-self-end">{user?.name}</span>
-              <span>{user?.managerId?.name ? user?.managerId?.name : user?.role}</span>
+              <span>
+                {user?.managerId?.name ? user?.managerId?.name : user?.role}
+              </span>
             </div>
 
             <div class="dropdown ">
@@ -112,8 +117,14 @@ function NavbarCompo() {
               >
                 <img
                   className="dropdown-img"
-                  width={50}
-                  src={ProfileImage}
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                    objectFit: "cover",
+                    border: "1px solid #54C999",
+                    borderRadius: "50%",
+                  }}
+                  src={ImageGenerator(profileData?.data?.image) ?? ProfileImage}
                   alt=""
                 />
               </button>

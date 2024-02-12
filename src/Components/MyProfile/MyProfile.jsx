@@ -1,228 +1,137 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MyProfile.css";
-import ProfilePic from "../../assets/Group 1.png";
-import C3Context from "../../Context/C3Context.";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useProfileQuery } from "../../Redux/api/authApi";
-import CustomModal from "../../UI/Modal.jsx";
-import UpdatePassword from "../UpdatePassword/UpdatePassword.jsx";
+import Swal from "sweetalert2";
+import { Form, Input } from "antd";
 
+import "react-toastify/dist/ReactToastify.css";
+
+import CustomModal from "../UI/Modal.jsx";
+import UpdatePassword from "../UpdatePassword/UpdatePassword.jsx";
+import Uplaod from "../UI/Uplaod.jsx";
+import useImageUpload from "../../hooks/useImageUpload.jsx";
+import profileImage from "../../assets/Group 1.png";
+import {
+  useProfileQuery,
+  useUpdateProfileMutation,
+} from "../../Redux/api/authApi.js";
+import { useAppSelector } from "../../Redux/hooks.js";
+import { useCurrentUser } from "../../Redux/features/auth/authSlice.js";
+import ImageGenerator from "../../utils/Image.jsx";
+import Loading from "../../utils/Loading.jsx";
 function MyProfileComp() {
-  const { getProfiledata, changeProfile } = useContext(C3Context);
   const [modal, setModal] = useState(false);
+  const { setFile, imageUrl, imageFile } = useImageUpload();
+  const { _id } = useAppSelector(useCurrentUser);
+  const { data: profileData } = useProfileQuery(_id);
+  const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+
+  const [form] = Form.useForm();
   const handleModal = () => {
     setModal((prev) => !prev);
   };
-  console.log(modal);
-  const [profileValues, setProfileValues] = useState({
-    name: "",
-    userName: "",
-    email: "",
-    image_url: "",
-  });
-  const [file, setFile] = useState("");
-
-  const handleOnChange = (e) => {
-    setProfileValues({ ...profileValues, [e.target.name]: e.target.value });
+  const onFinish = async (data) => {
+    try {
+      const formData = new FormData();
+      if (imageFile) {
+        formData.append("file", imageFile);
+      }
+      formData.append("data", JSON.stringify(data));
+      const res = await updateProfile(formData).unwrap();
+      Swal.fire(res?.message, "", "success");
+    } catch (err) {
+      Swal.fire(err?.data?.message, "", "error");
+    }
   };
-
-  const {
-    data: profileData,
-    isLoading,
-    isSuccess,
-  } = useProfileQuery(undefined);
-
-  // Following function is used to updaate the user profilel:
-
-  const updateProfile = async () => {
-    changeProfile(profileValues?.name, profileValues?.email, file)
-      .then((data) => {
-        console.log("Profile Update: ", data);
-        toast("Profile updated successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      })
-      .catch((data) => {
-        toast.error("OOPs something went wrong!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      });
-  };
-
-  const handleOpenFile = () => {
-    let file = document.querySelector(".open_file");
-    file.click();
-  };
-
-  const handleSubmitFile = (e) => {
-    console.log(e.target.files[0]);
-    setFile(e.target.files[0]);
-  };
-
+  // set default value
+  useEffect(() => {
+    form.setFieldsValue({
+      email: profileData?.data?.email,
+      name: profileData?.data?.name,
+      userName: profileData?.data?.userName,
+      file: profileData?.data?.image,
+    });
+  }, [
+    form,
+    profileData?.data?.name,
+    profileData?.data?.email,
+    profileData?.data?.userName,
+    profileData?.data?.image,
+  ]);
   return (
-    <div>
+    <div className="profile-container">
       {modal && (
         <CustomModal setShowModal={setModal} showModal={modal}>
           <UpdatePassword setShowModal={setModal} />
         </CustomModal>
       )}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <ToastContainer />
-      <div className="profile-container">
-        <div className="d-flex justify-content-between align-items-center flex-wrap">
-          <div className="d-flex justify-content-between align-items-center">
-            <img
-              className="mx-2 profile_image"
-              width={60}
-              src={
-                profileValues?.image_url
-                  ? `http://nawaf.pythonanywhere.com${profileValues?.image_url}`
-                  : ProfilePic
-              }
-              alt=""
-            />
-            <input
-              onChange={handleSubmitFile}
-              className="align-self-end open_file d-none"
-              type="file"
-            />
-            <button
-              onClick={handleOpenFile}
-              className="nav-btn align-self-end choose-file-btn"
-            >
-              Choose File
-            </button>
-          </div>
 
-          <div
-            style={{
-              display: "flex",
-              gap: "6px",
-            }}
+      <div className="d-flex justify-content-end">
+        <button
+          onClick={handleModal}
+          className="nav-btn nav-btn-shadow save-btn my-2 "
+          style={{
+            backgroundColor: "#54C999",
+          }}
+        >
+          Change Password
+        </button>
+      </div>
+
+      <div className="w-50 mx-auto  my-auto  ">
+        <Form layout="vertical" onFinish={onFinish} form={form}>
+          <Form.Item>
+            <div className="d-flex justify-content-center align-items-center">
+              <img
+                style={{
+                  objectFit: "cover",
+                }}
+                className="mx-2 profile_image border-0 "
+                width={60}
+                src={
+                  imageUrl ??
+                  ImageGenerator(profileData?.data?.image) ??
+                  profileImage
+                }
+                alt=""
+              />
+              <Uplaod setSelectedFile={setFile} />
+            </div>
+          </Form.Item>
+
+          <Form.Item
+            key="userName"
+            name="userName"
+            label={<p className="m-0">User Name</p>}
           >
+            <Input className="py-2" placeholder="enter fullName" />
+          </Form.Item>
+          <Form.Item
+            key="name"
+            name="name"
+            label={<p className="m-0">Full Name</p>}
+          >
+            <Input className="py-2" placeholder="enter fullName" />
+          </Form.Item>
+
+          <Form.Item
+            key="email"
+            name="email"
+            label={<p className="m-0">Email</p>}
+          >
+            <Input className="py-2" placeholder="enter email" />
+          </Form.Item>
+          <Form.Item className="d-flex  justify-content-center">
             <button
+              type="submit"
               style={{
                 backgroundColor: "#54C999",
               }}
               className="nav-btn nav-btn-shadow save-btn my-2"
             >
-              Save Changes
+              {isLoading ? <Loading /> : "Update Profile"}
             </button>
-            <button
-              onClick={handleModal}
-              className="nav-btn nav-btn-shadow save-btn my-2"
-            >
-              Change Password
-            </button>
-          </div>
-        </div>
-
-        <div className="my-5 account-container">
-          <h4 className="my-5">Account</h4>
-          <div className="d-flex justify-content-between align-items-center flex-wrap">
-            <div className="input-div">
-              <label className="align-self-start" htmlFor="name">
-                Name
-              </label>
-              <input
-                // value={profileValues?.name}
-                defaultValue={profileData?.data?.name}
-                className="custom-box-style input_outline"
-                type="text"
-                id="name"
-                name="name"
-                onChange={handleOnChange}
-              />
-            </div>
-            <div className="input-div">
-              <label className="align-self-start " htmlFor="username">
-                User Name
-              </label>
-              <input
-                defaultValue={profileData?.data?.userName}
-                className="custom-box-style input_outline"
-                type="text"
-                id="username"
-                name="userName"
-                onChange={handleOnChange}
-              />
-            </div>
-            <div className="input-div">
-              <label className="align-self-start" htmlFor="email">
-                Email
-              </label>
-              <input
-                defaultValue={profileData?.data?.email}
-                className="custom-box-style input_outline"
-                type="text"
-                id="email"
-                name="email"
-                onChange={handleOnChange}
-              />
-            </div>
-          </div>
-        </div>
-        {/* <div className="my-5 account-container">
-          <h4 className="my-5">Password</h4>
-          <div className="d-flex justify-content-between align-items-center flex-wrap">
-            <div className="input-div">
-              <label className="align-self-start" htmlFor="name">
-                Current Password
-              </label>
-              <input
-                defaultValue={profileData?.data?.password}
-                className="custom-box-style input_outline"
-                type="text"
-                id="name"
-              />
-            </div>
-            <div className="input-div">
-              <label className="align-self-start " htmlFor="username">
-                New Password
-              </label>
-              <input
-                className="custom-box-style input_outline"
-                type="text"
-                id="username"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center">
-          <button
-            onClick={updateProfile}
-            className="nav-btn nav-btn-shadow save-btn my-2"
-          >
-            Save Changes
-          </button>
-        </div> */}
+          </Form.Item>
+        </Form>
       </div>
     </div>
   );
