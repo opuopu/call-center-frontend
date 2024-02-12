@@ -88,8 +88,8 @@ function MyProfileComp() {
                 className="mx-2 profile_image border-0 "
                 width={60}
                 src={
-                  imageUrl ??
-                  ImageGenerator(profileData?.data?.image) ??
+                  imageUrl ||
+                  ImageGenerator(profileData?.data?.image) ||
                   profileImage
                 }
                 alt=""
@@ -103,14 +103,14 @@ function MyProfileComp() {
             name="userName"
             label={<p className="m-0">User Name</p>}
           >
-            <Input className="py-2" placeholder="enter fullName" />
+            <Input className="py-2" placeholder="enter user name" />
           </Form.Item>
           <Form.Item
             key="name"
             name="name"
             label={<p className="m-0">Full Name</p>}
           >
-            <Input className="py-2" placeholder="enter fullName" />
+            <Input className="py-2" placeholder="enter full Name" />
           </Form.Item>
 
           <Form.Item

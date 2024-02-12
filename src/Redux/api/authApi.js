@@ -11,6 +11,14 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
+    signupUser: builder.mutation({
+      query: (data) => ({
+        url: "/users/sign-up",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
     profile: builder.query({
       query: () => ({
         url: "/users/profile",
@@ -34,6 +42,13 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
+    RetrivemangerUsers: builder.query({
+      query: () => ({
+        url: "/users/managers-users",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.user],
+    }),
   }),
 });
 
@@ -42,4 +57,6 @@ export const {
   useProfileQuery,
   useUpdatePassWordMutation,
   useUpdateProfileMutation,
+  useRetrivemangerUsersQuery,
+  useSignupUserMutation,
 } = authApi;

@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import swal from "sweetalert";
-import qs from "qs";
+import React, { useState } from "react";
+
 import Swal from "sweetalert2";
 import "./User.css";
 import { useDispatch } from "react-redux";
-import { SERVERURL } from "../../ServerUrl";
 import { useNavigate } from "react-router-dom";
 import { useSignInMutation } from "../../Redux/api/authApi";
 import { setUser } from "../../Redux/features/auth/authSlice";
-
 
 function UserLogin() {
   const dispatch = useDispatch();
@@ -19,65 +15,28 @@ function UserLogin() {
     password: "",
   });
 
-  const [signInUser, { isLoading, isError, isSuccess }] = useSignInMutation()
-
+  const [signInUser] = useSignInMutation();
 
   const newHandleClick = async (e) => {
     e.preventDefault();
-
-    console.log("inputData", inputData)
-
     try {
       const response = await signInUser(inputData).unwrap();
-      console.log("res", response)
+      console.log("res", response);
       if (response) {
         const userInfo = {
-          ...response.data.user
-        }
+          ...response.data.user,
+        };
         delete userInfo.password;
         // delete userInfo._id;
-        dispatch(setUser({ token: response?.data?.accessToken, user: userInfo }))
+        dispatch(
+          setUser({ token: response?.data?.accessToken, user: userInfo })
+        );
       }
-      Swal.fire("Login successfully", "", "success");
+      Swal.fire(response?.message, "", "success");
       Navigate("/");
-
     } catch (err) {
       console.log(err);
-      Swal.fire(
-        err?.response?.data?.non_field_errors[0] || "Login successfully",
-        "",
-        "error"
-      );
-    }
-  };
-  const loginClicked = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        `${SERVERURL}/auth/user/login/`,
-        inputData,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "*",
-            "Access-Control-Allow-Credentials": "true",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-            // Authorization: "TOKEN 878586c77a8029bd34c5fde58c38d952eb0a5ded",
-          },
-        }
-      );
-      console.log("response", response);
-
-      if (response?.data?.status) {
-        // dispatch(currentUserData(response?.data?.user));
-        swal("Successfully", response?.data?.message, "success");
-      }
-    } catch (error) {
-      console.error("error", error);
-
-      swal("Failed", error?.response?.data?.message, "error");
+      Swal.fire(err?.data?.message, "", "error");
     }
   };
 

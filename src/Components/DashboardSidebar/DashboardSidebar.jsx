@@ -2,11 +2,9 @@ import React from "react";
 import "./DashboardSidebar.css";
 import LightLogo from "../../assets/Call Center Coach Logo-F 1 (1).png";
 import { useNavigate, useLocation } from "react-router-dom";
-
 function DashboardSidebar() {
   let Navigate = useNavigate();
   let location = useLocation();
-
   return (
     <>
       <div className="nav-sidebar">
@@ -31,7 +29,7 @@ function DashboardSidebar() {
                 : "nav-child"
             }
           >
-            Team
+            Team Management
           </li>
           <li
             onClick={() => {
