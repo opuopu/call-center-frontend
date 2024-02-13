@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DashboardSidebar from "../Components/DashboardSidebar/DashboardSidebar";
 import "./Pages.css";
-
 import {
   useChangeUserStatusMutation,
   useRetrivemangerUsersQuery,
