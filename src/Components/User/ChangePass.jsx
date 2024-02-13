@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 // import Stripe from "stripe";
 import "./User.css";
 import C3Context from "../../Context/C3Context.";
-const BASE_URL = "http://nawaf.pythonanywhere.com";
+
 function ChangePass() {
   const { changePass } = useContext(C3Context);
 

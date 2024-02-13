@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Input } from "antd";
 import Swal from "sweetalert2";
-import profileImage from "../../assets/Group 1.png";
-import Uplaod from "../UI/Uplaod.jsx";
 import { useSignupUserMutation } from "../../Redux/api/authApi.js";
+
 import Loading from "../../utils/Loading.jsx";
 const CreateUser = ({ setShowModal }) => {
   const [createUser, { isLoading }] = useSignupUserMutation();
   const onFinish = async (data) => {
-    const res = await createUser(data).unwrap();
-    if (res?.success) {
-      Swal.fire(res?.message, "", "success");
-      setShowModal((prev) => !prev);
-    }
     try {
+      const res = await createUser(data).unwrap();
+      if (res?.success) {
+        Swal.fire(res?.message, "", "success");
+        setShowModal((prev) => !prev);
+      }
     } catch (err) {
       Swal.fire(err?.data?.message, "", "error");
     }

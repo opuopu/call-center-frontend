@@ -49,6 +49,14 @@ const authApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.user],
     }),
+    ChangeUserStatus: builder.mutation({
+      query: (data) => ({
+        url: `/users/change-status/${data?.id}`,
+        method: "PATCH",
+        body: data?.body,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
   }),
 });
 
@@ -59,4 +67,5 @@ export const {
   useUpdateProfileMutation,
   useRetrivemangerUsersQuery,
   useSignupUserMutation,
+  useChangeUserStatusMutation,
 } = authApi;
