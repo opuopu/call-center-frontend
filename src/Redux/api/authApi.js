@@ -26,11 +26,26 @@ const authApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.user],
     }),
+    SingleUser: builder.query({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.user],
+    }),
     updateProfile: builder.mutation({
       query: (data) => ({
         url: "/users/",
         method: "PUT",
         body: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
+    updateUserByManager: builder.mutation({
+      query: (data) => ({
+        url: `/users/update-user/${data.id}`,
+        method: "PATCH",
+        body: data?.body,
       }),
       invalidatesTags: [tagTypes.user],
     }),
@@ -68,4 +83,6 @@ export const {
   useRetrivemangerUsersQuery,
   useSignupUserMutation,
   useChangeUserStatusMutation,
+  useSingleUserQuery,
+  useUpdateUserByManagerMutation,
 } = authApi;

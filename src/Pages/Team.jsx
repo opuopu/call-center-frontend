@@ -11,11 +11,18 @@ import CustomModal from "../Components/UI/Modal.jsx";
 import CreateUser from "../Components/CreateUser/CreateUser.jsx";
 import { AiOutlineClose, AiOutlineCheck, AiFillEdit } from "react-icons/ai";
 import Swal from "sweetalert2";
+import EditUser from "../Components/Edituser/EditUser.jsx";
 function Team() {
   const { data: usersData } = useRetrivemangerUsersQuery(undefined);
-  const [modal, setModal] = useState(false);
   const [changeStatus] = useChangeUserStatusMutation();
-
+  const [modal, setModal] = useState(false);
+  const [modal2, setmodal2] = useState(false);
+  const [id, setId] = useState(null);
+  const handleEditModal = (id) => {
+    console.log("clicked apk");
+    setId(id);
+    setmodal2((prev) => !prev);
+  };
   const handleActiveUser = async (id, status) => {
     try {
       const res = await changeStatus({ id: id, body: { status } }).unwrap();
@@ -38,8 +45,8 @@ function Team() {
   const column = [
     {
       title: "#SL",
-      key: "index",
-      dataIndex: "index",
+      key: "key",
+      dataIndex: "key",
     },
     {
       title: "Full Name",
@@ -64,7 +71,6 @@ function Team() {
     {
       title: "Actions",
       render: (data) => {
-        console.log(data);
         return (
           <div className="d-flex gap-2 ">
             {data?.status2 === "disabled" ? (
@@ -100,11 +106,12 @@ function Team() {
     },
     {
       title: "Edit",
-      render: () => {
+      render: (data) => {
         return (
           <div>
             <span>
               <AiFillEdit
+                onClick={() => handleEditModal(data?.id)}
                 style={{
                   fontWeight: "600",
                   fontSize: "18px",
@@ -119,7 +126,7 @@ function Team() {
   ];
   const data = usersData?.data?.map((user, index) => {
     return {
-      index: index + 1,
+      key: index + 1,
       name: user?.name,
       id: user?._id,
       userName: user?.userName,
@@ -146,6 +153,11 @@ function Team() {
       {modal && (
         <CustomModal setShowModal={setModal} showModal={modal}>
           <CreateUser setShowModal={setModal} />
+        </CustomModal>
+      )}
+      {modal2 && (
+        <CustomModal setShowModal={setmodal2} showModal={modal2}>
+          <EditUser setShowModal={setmodal2} id={id} />
         </CustomModal>
       )}
       <div className="d-flex">
