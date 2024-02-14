@@ -72,7 +72,6 @@ function ScoreContainer({ data }) {
       rank: data?.rank,
     };
   });
-
   return (
     <>
       <div className="container">
