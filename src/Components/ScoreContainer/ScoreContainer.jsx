@@ -4,7 +4,9 @@ import ProfilePic from "../../assets/Group 1.png";
 import Star from "../../assets/Vector.png";
 import ImageGenerator from "../../utils/Image.jsx";
 import Table from "../Table/Table.jsx";
-import { Avatar } from "antd";
+import badge1 from "../../assets/badge1.png";
+import badge2 from "../../assets/badge2.png";
+import badge3 from "../../assets/badge3.png";
 function ScoreContainer({ data }) {
   const column = [
     {
@@ -28,7 +30,7 @@ function ScoreContainer({ data }) {
       dataIndex: "rank",
     },
   ];
-  const formatedData = data?.data?.map((data) => {
+  const formatedData = data?.data?.map((data, index) => {
     return {
       image: (
         <img
@@ -69,7 +71,37 @@ function ScoreContainer({ data }) {
           </p>
         </div>
       ),
-      rank: data?.rank,
+      rank: (
+        <div
+          style={{
+            fontWeight: "600",
+            fontSize: "16px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {index < 4 ? (
+            <img
+              src={
+                (index === 0 && badge1) ||
+                (index === 1 && badge2) ||
+                (index === 3 && badge3)
+              }
+              alt=""
+            />
+          ) : (
+            <p
+              style={{
+                fontWeight: "600",
+                fontSize: "16px",
+              }}
+            >
+              # {data?.rank}
+            </p>
+          )}
+        </div>
+      ),
     };
   });
   return (
