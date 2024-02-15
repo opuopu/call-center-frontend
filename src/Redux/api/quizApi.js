@@ -18,6 +18,14 @@ const quizApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.quiz],
     }),
+    GetRandomContext: builder.query({
+      query: () => ({
+        url: `/quiz/random-context`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.quiz, tagTypes.question],
+    }),
+
     singlQuestion: builder.query({
       query: (id) => ({
         url: `/quiz/question/${id}`,
@@ -40,6 +48,7 @@ const quizApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.quiz],
     }),
+
     GetAllLeaderBoardData: builder.query({
       query: () => ({
         url: `/quiz/user-leaderboard`,
@@ -56,4 +65,5 @@ export const {
   useSinglQuestionQuery,
   useManagerLeaderboardQuery,
   useGetAllLeaderBoardDataQuery,
+  useGetRandomContextQuery,
 } = quizApi;

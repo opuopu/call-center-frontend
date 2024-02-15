@@ -2,13 +2,8 @@ export const tagTypes = {
   user: "user",
   quiz: "quiz",
   category: "category",
-  mentor: "mentor",
-  course: "course",
-  student: "student",
-  class: "class",
-  event: "event",
-  classSchedule: "classSchedule",
-  wallet: "wallet",
+  question: "question",
+  QuestionSubmit: "questionsubmit",
 };
 export const tagTypesList = [
   tagTypes.user,
@@ -21,4 +16,6 @@ export const tagTypesList = [
   tagTypes.event,
   tagTypes.classSchedule,
   tagTypes.wallet,
+  tagTypes.question,
+  tagTypes.QuestionSubmit,
 ];

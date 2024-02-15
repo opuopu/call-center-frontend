@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
 import {
   persistReducer,
   persistStore,
@@ -10,9 +10,10 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import authReducer from './features/auth/authSlice';
-import { baseApi } from './api/baseApi';
-
+import authReducer from "./features/auth/authSlice";
+import { baseApi } from "./api/baseApi";
+import QuizSlice from "./features/quiz/QuizSlice.js";
+import QuestionSlice from "./features/Question/QuestionSlice.js";
 
 const persistConfig = {
   key: "auth",
@@ -25,6 +26,8 @@ export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
+    quiz: QuizSlice,
+    question: QuestionSlice,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({
@@ -32,6 +35,6 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }).concat(baseApi.middleware),
-})
+});
 
 export const persistor = persistStore(store);

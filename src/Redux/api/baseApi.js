@@ -4,7 +4,7 @@ import { tagTypesList } from "../../types/tags";
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.10.3:3000/api",
+    baseUrl: "http://192.168.10.101:3000/api",
     // credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;

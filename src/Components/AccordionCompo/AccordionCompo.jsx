@@ -1,18 +1,13 @@
 import React from "react";
-import Accordion from "react-bootstrap/Accordion";
 import "./AccordionCompo.css";
-import { accordionData, levelData } from "./AccordionData";
-import Star from "../../assets/Vector.png";
-import ProgressBar from "react-bootstrap/ProgressBar";
-import { useAllQuizQuery } from "../../Redux/api/quizApi";
+import { useGetRandomContextQuery } from "../../Redux/api/quizApi";
 import { Link, useNavigate } from "react-router-dom";
 
 function AccordionCompo() {
+  const { data: randomContextData } = useGetRandomContextQuery(undefined);
+  console.log(randomContextData);
 
-  const { data: quizData, isLoading, isSuccessful } = useAllQuizQuery(undefined);
-  // console.log("Quiz Data", quizData)
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // const handleNextQuestion = () => {
   //   navigate('/quiz-home-sentence', { state: { quizData } })
@@ -20,19 +15,18 @@ function AccordionCompo() {
 
   return (
     <>
-      {quizData?.data?.result?.map((elem, index) => {
-        return (
-          <Link to={`/context-qus/${elem?._id}`}>
-            <button className="green-btn green-button-shadow py-2">Start Practice Session</button>
-          </Link>
-        )
-      })}
-
+      <div>
+        <Link to={`/context-qus/${randomContextData?.data?._id}`}>
+          <button className="green-btn green-button-shadow py-2">
+            Start Practice Session
+          </button>
+        </Link>
+      </div>
       {/* <Accordion
         className="accordion-container"
         style={{ width: "100%" }}
         flush
-      >
+      > 
         {accordionData?.map((elem, index) => {
           return (
             <>
