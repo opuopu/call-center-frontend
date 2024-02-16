@@ -38,13 +38,11 @@ function App() {
         <Router>
           <NavbarCompo />
           <Routes>
-            <Route exact path="/" element={<DashboardHome />} >
-
+            <Route exact path="/" element={<DashboardHome />}>
               {/* <Route
                 path="/context-qus/:id"
                 element={<ContextWiseQus />}
               /> */}
-
             </Route>
             <Route exact path="/:id/:id/:id/:id" element={<MyProfile />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
@@ -56,7 +54,7 @@ function App() {
             <Route path="/button-pressed" element={<ButtonPressed />} />
             <Route path="/submit-state" element={<SubmitState />} />
             <Route path="/result" element={<ResultState />} />
-            <Route path="/congratulations/:id" element={<ResultCongratulation />} />
+            <Route path="/congratulations" element={<ResultCongratulation />} />
             <Route path="/home-sentence" element={<HomeSentence />} />
             {/* ------------------------ */}
             <Route
@@ -64,10 +62,7 @@ function App() {
               element={<QuizHomeSentence />}
             />
 
-            <Route
-              path="/context-qus/:id"
-              element={<ContextWiseQus />}
-            />
+            <Route path="/context-qus/:id" element={<ContextWiseQus />} />
             {/* ---------------------------- */}
 
             <Route

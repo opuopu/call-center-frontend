@@ -11,7 +11,33 @@ const userResponseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.QuestionSubmit],
     }),
+    CalculateTotalScores: builder.query({
+      query: (id) => ({
+        url: `/user-response/total-score/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.QuestionSubmit, tagTypes.question],
+    }),
+    RetrivemangerLeaderBoard: builder.query({
+      query: () => ({
+        url: `/user-response/manager-leaderboard/`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.QuestionSubmit, tagTypes.question],
+    }),
+    RetriveUserLeaderboard: builder.query({
+      query: () => ({
+        url: `/user-response/user-leaderboard/`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.QuestionSubmit, tagTypes.question],
+    }),
   }),
 });
 
-export const { useInserUserResponseMutation } = userResponseApi;
+export const {
+  useInserUserResponseMutation,
+  useCalculateTotalScoresQuery,
+  useRetrivemangerLeaderBoardQuery,
+  useRetriveUserLeaderboardQuery,
+} = userResponseApi;

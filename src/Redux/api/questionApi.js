@@ -3,14 +3,22 @@ import { baseApi } from "./baseApi.js";
 
 const questionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    GetTotalQuestionsUnderContext: builder.query({
+      query: (id) => ({
+        url: `questions/${id}`,
+        method: "GET",
+      }),
+    }),
     GetRandomQestions: builder.query({
       query: (id) => ({
         url: `/questions/random-question/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.question],
     }),
   }),
 });
 
-export const { useGetRandomQestionsQuery } = questionApi;
+export const {
+  useGetRandomQestionsQuery,
+  useGetTotalQuestionsUnderContextQuery,
+} = questionApi;

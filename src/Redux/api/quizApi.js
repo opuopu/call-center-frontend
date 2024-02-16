@@ -23,7 +23,7 @@ const quizApi = baseApi.injectEndpoints({
         url: `/quiz/random-context`,
         method: "GET",
       }),
-      providesTags: [tagTypes.quiz, tagTypes.question],
+      // providesTags: [tagTypes.quiz, tagTypes.question],
     }),
 
     singlQuestion: builder.query({

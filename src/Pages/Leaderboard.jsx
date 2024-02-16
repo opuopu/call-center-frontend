@@ -9,17 +9,20 @@ import {
   useGetAllLeaderBoardDataQuery,
   useManagerLeaderboardQuery,
 } from "../Redux/api/quizApi.js";
+import {
+  useRetriveUserLeaderboardQuery,
+  useRetrivemangerLeaderBoardQuery,
+} from "../Redux/api/userResponseApi.js";
 function Leaderboard() {
   const user = useSelector(useCurrentUser);
   const { role } = user || {};
-  console.log(role);
-  const { data: managerLeaderboardData } = useManagerLeaderboardQuery(
+  const { data: managerLeaderboardData } = useRetrivemangerLeaderBoardQuery(
     user?._id,
     {
       skip: role !== "manager",
     }
   );
-  const { data: userLeaderBoardData } = useGetAllLeaderBoardDataQuery(
+  const { data: userLeaderBoardData } = useRetriveUserLeaderboardQuery(
     undefined,
     {
       skip: role !== "user",

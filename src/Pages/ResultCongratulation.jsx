@@ -1,20 +1,13 @@
 import React from "react";
 import Star from "../assets/Vector.png";
 import { useAllQuizQuery } from "../Redux/api/quizApi";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
+import { useCalculateTotalScoresQuery } from "../Redux/api/userResponseApi.js";
 
 function ResultCongratulation() {
-
-  const { id } = useParams();
-  console.log("id", id)
-
-  const { data: quizData, isLoading, isSuccessful } = useAllQuizQuery(undefined);
-  console.log("Quiz Data", quizData)
-
-  // Find the quiz with the specified id
-  const selectedQuiz = quizData?.data?.result?.find(quiz => quiz._id === id);
-  console.log(selectedQuiz)
-
+  const location = useLocation();
+  const { data: scoreData } = useCalculateTotalScoresQuery(location.state.id);
+  console.log(scoreData);
   return (
     <>
       <div
@@ -28,8 +21,13 @@ function ResultCongratulation() {
             </p>
             <p>LEVEL 2 - Exercise 3</p>
           </div> */}
-          <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-            <div style={{ width: "100%", padding: "20px" }} className=" star-container-child star-congratulation">
+          <div
+            style={{ display: "flex", justifyContent: "center", width: "100%" }}
+          >
+            <div
+              style={{ width: "100%", padding: "20px" }}
+              className=" star-container-child star-congratulation"
+            >
               <p className="congratulations">Congratulations!</p>
               <p className="success-text">Exercise passed</p>
               <div className="d-flex justify-content-center align-items-center">
@@ -38,13 +36,13 @@ function ResultCongratulation() {
                   {" "}
                   <span>{selectedQuiz?.score}</span> /100
                 </span> */}
-                <span>{selectedQuiz?.score}</span>
+                <span>{scoreData?.data?.totalScore}</span>
               </div>
               <div className="congratulation-btn-container d-flex justify-content-around align-items-center w-100 my-2 flex-wrap">
                 {/* <button className="green-btn green-button-shadow">
                   Review Answers
                 </button> */}
-                <Link to={'/'}>
+                <Link to={"/"}>
                   <button className="blue-btn blue-button-shadow">
                     Continue
                   </button>

@@ -1,6 +1,5 @@
 import React from "react";
 import ScoreCard from "../Components/ScoreCard/ScoreCard";
-import { Container } from "react-bootstrap";
 import { BsArrowLeftShort } from "react-icons/bs";
 
 function ScoreBoard() {
@@ -8,7 +7,6 @@ function ScoreBoard() {
     <>
       <div className="my-3  mx-5">
         <button className="home-text">
-          {" "}
           <BsArrowLeftShort className="home-arrow" /> Home
         </button>
         <h3 className="mx-auto text-center">Check out your scorecard!</h3>

@@ -14,6 +14,7 @@ import authReducer from "./features/auth/authSlice";
 import { baseApi } from "./api/baseApi";
 import QuizSlice from "./features/quiz/QuizSlice.js";
 import QuestionSlice from "./features/Question/QuestionSlice.js";
+import leaderboardSlice from "./features/leaderboard/leaderboardSlice.js";
 
 const persistConfig = {
   key: "auth",
@@ -28,6 +29,7 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     quiz: QuizSlice,
     question: QuestionSlice,
+    leaderBoard: leaderboardSlice,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({

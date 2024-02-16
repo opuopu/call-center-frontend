@@ -1,12 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  perQuestionProgress: 0,
   progress: 0,
 };
 const quizSlice = createSlice({
   name: "quiz",
   initialState,
   reducers: {
+    calculatePerProgress: (state, action) => {
+      const perProgressValue = Math.ceil(100 / Number(action?.payload?.total));
+      state.perQuestionProgress = perProgressValue;
+    },
     incrementProgress: (state, action) => {
       state.progress += action.payload;
     },
@@ -15,5 +20,6 @@ const quizSlice = createSlice({
     },
   },
 });
-export const { incrementProgress, resetProgress } = quizSlice.actions;
+export const { incrementProgress, resetProgress, calculatePerProgress } =
+  quizSlice.actions;
 export default quizSlice.reducer;

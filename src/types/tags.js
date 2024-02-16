@@ -4,6 +4,7 @@ export const tagTypes = {
   category: "category",
   question: "question",
   QuestionSubmit: "questionsubmit",
+  leaderboard: "leaderboard",
 };
 export const tagTypesList = [
   tagTypes.user,
@@ -18,4 +19,5 @@ export const tagTypesList = [
   tagTypes.wallet,
   tagTypes.question,
   tagTypes.QuestionSubmit,
+  tagTypes.leaderboard,
 ];

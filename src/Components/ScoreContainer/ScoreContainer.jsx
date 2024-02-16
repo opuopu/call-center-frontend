@@ -67,7 +67,7 @@ function ScoreContainer({ data }) {
               fontSize: "16px",
             }}
           >
-            {data?.totalScore}
+            {data?.score}
           </p>
         </div>
       ),
@@ -81,23 +81,24 @@ function ScoreContainer({ data }) {
             justifyContent: "center",
           }}
         >
-          {index < 4 ? (
+          {index < 3 ? (
             <img
               src={
                 (index === 0 && badge1) ||
                 (index === 1 && badge2) ||
-                (index === 3 && badge3)
+                (index === 2 && badge3)
               }
               alt=""
             />
           ) : (
             <p
               style={{
-                fontWeight: "600",
-                fontSize: "16px",
+                color: "#54C999",
+                fontWeight: "800",
+                fontSize: "24px",
               }}
             >
-              # {data?.rank}
+              #{index + 1}
             </p>
           )}
         </div>
