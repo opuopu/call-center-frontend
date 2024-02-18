@@ -21,7 +21,7 @@ import Loading from "../../utils/Loading.jsx";
 function MyProfileComp() {
   const [modal, setModal] = useState(false);
   const { setFile, imageUrl, imageFile } = useImageUpload();
-  const { _id } = useAppSelector(useCurrentUser);
+  const { _id } = useAppSelector(useCurrentUser) || {};
   const { data: profileData } = useProfileQuery(_id);
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
 

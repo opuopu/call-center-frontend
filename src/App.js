@@ -62,7 +62,7 @@ function App() {
               element={<QuizHomeSentence />}
             />
 
-            <Route path="/context-qus/:id" element={<ContextWiseQus />} />
+            <Route path="/context-qus/" element={<ContextWiseQus />} />
             {/* ---------------------------- */}
 
             <Route

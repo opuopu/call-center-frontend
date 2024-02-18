@@ -18,6 +18,13 @@ const userResponseApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.QuestionSubmit, tagTypes.question],
     }),
+    DeleteResponses: builder.mutation({
+      query: (id) => ({
+        url: `/user-response/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.QuestionSubmit],
+    }),
     RetrivemangerLeaderBoard: builder.query({
       query: () => ({
         url: `/user-response/manager-leaderboard/`,
@@ -40,4 +47,5 @@ export const {
   useCalculateTotalScoresQuery,
   useRetrivemangerLeaderBoardQuery,
   useRetriveUserLeaderboardQuery,
+  useDeleteResponsesMutation,
 } = userResponseApi;

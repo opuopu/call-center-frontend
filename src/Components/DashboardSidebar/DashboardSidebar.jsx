@@ -2,7 +2,10 @@ import React from "react";
 import "./DashboardSidebar.css";
 import LightLogo from "../../assets/Call Center Coach Logo-F 1 (1).png";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAppSelector } from "../../Redux/hooks.js";
+import { useCurrentUser } from "../../Redux/features/auth/authSlice.js";
 function DashboardSidebar() {
+  const { role } = useAppSelector(useCurrentUser) || {};
   let Navigate = useNavigate();
   let location = useLocation();
   return (
@@ -16,21 +19,23 @@ function DashboardSidebar() {
             style={{ cursor: "pointer" }}
             className={location.pathname === "/" ? `active` : "nav-child"}
           >
-            Exercise
+            Practice
           </li>
-          <li
-            onClick={() => {
-              Navigate("/team");
-            }}
-            style={{ cursor: "pointer" }}
-            className={
-              location.pathname === "/team" || location?.pathname === "/team"
-                ? `active`
-                : "nav-child"
-            }
-          >
-            Team Management
-          </li>
+          {role === "manager" && (
+            <li
+              onClick={() => {
+                Navigate("/team");
+              }}
+              style={{ cursor: "pointer" }}
+              className={
+                location.pathname === "/team" || location?.pathname === "/team"
+                  ? `active`
+                  : "nav-child"
+              }
+            >
+              Team Management
+            </li>
+          )}
           <li
             onClick={() => {
               Navigate("/leaderboard");

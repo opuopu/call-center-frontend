@@ -5,10 +5,7 @@ import NavDropDown from "../Components/NavDropDown/NavDropDown";
 import ScoreContainer from "../Components/ScoreContainer/ScoreContainer";
 import { useSelector } from "react-redux";
 import { useCurrentUser } from "../Redux/features/auth/authSlice.js";
-import {
-  useGetAllLeaderBoardDataQuery,
-  useManagerLeaderboardQuery,
-} from "../Redux/api/quizApi.js";
+
 import {
   useRetriveUserLeaderboardQuery,
   useRetrivemangerLeaderBoardQuery,
@@ -28,7 +25,7 @@ function Leaderboard() {
       skip: role !== "user",
     }
   );
-  console.log("managerleaderboardata", managerLeaderboardData);
+
   return (
     <>
       <div className="d-flex">

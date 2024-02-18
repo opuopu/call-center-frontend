@@ -8,7 +8,7 @@ const quizApi = baseApi.injectEndpoints({
         url: "/quiz",
         method: "GET",
       }),
-      providesTags: [tagTypes.quiz],
+      // providesTags: [tagTypes.quiz],
     }),
 
     singleQuiz: builder.query({
@@ -16,14 +16,14 @@ const quizApi = baseApi.injectEndpoints({
         url: `/quiz/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.quiz],
+      // providesTags: [tagTypes.quiz],
     }),
     GetRandomContext: builder.query({
       query: () => ({
         url: `/quiz/random-context`,
         method: "GET",
       }),
-      // providesTags: [tagTypes.quiz, tagTypes.question],
+      providesTags: [tagTypes.quiz, tagTypes.question, tagTypes.leaderboard],
     }),
 
     singlQuestion: builder.query({
@@ -31,7 +31,7 @@ const quizApi = baseApi.injectEndpoints({
         url: `/quiz/question/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.quiz],
+      // providesTags: [tagTypes.quiz],
     }),
     questionAnswer: builder.mutation({
       query: (data) => ({
@@ -39,7 +39,7 @@ const quizApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: [tagTypes.quiz],
+      // invalidatesTags: [tagTypes.quiz],
     }),
     ManagerLeaderboard: builder.query({
       query: (id) => ({

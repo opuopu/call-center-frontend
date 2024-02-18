@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
 import ProgressBar from "../../Components/ProgressBar/ProgressBarCompo";
 import { useParams } from "react-router-dom";
-import { useSingleQuizQuery } from "../../Redux/api/quizApi";
+import {
+  useGetRandomContextQuery,
+  useSingleQuizQuery,
+} from "../../Redux/api/quizApi";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
   useGetRandomQestionsQuery,
   useGetTotalQuestionsUnderContextQuery,
 } from "../../Redux/api/questionApi.js";
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks.js";
-import { useInserUserResponseMutation } from "../../Redux/api/userResponseApi.js";
+import {
+  useDeleteResponsesMutation,
+  useInserUserResponseMutation,
+} from "../../Redux/api/userResponseApi.js";
 import {
   resetIds,
   setActiveButtonId,
@@ -21,13 +28,16 @@ import {
   incrementProgress,
 } from "../../Redux/features/quiz/QuizSlice.js";
 import { useInsertDataIntoLeaderboardMutation } from "../../Redux/api/leaderboardApi.js";
+import NoData from "../NoData/NoData.jsx";
 
 const ContextWiseQus = () => {
-  const { id } = useParams();
+  const { data: randomContextData } = useGetRandomContextQuery(undefined);
+  const id = randomContextData?.data?._id;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data: randomQuestionData, refetch } = useGetRandomQestionsQuery(id);
   const [submitAnswer] = useInserUserResponseMutation();
+  const [deleteResponse] = useDeleteResponsesMutation();
   const [insertLeaderBoardData, { isLoading }] =
     useInsertDataIntoLeaderboardMutation();
   const { data: totalQuestionsData } =
@@ -44,11 +54,12 @@ const ContextWiseQus = () => {
     dispatch(calculatePerProgress(totalQuestionsData?.data));
   }, [dispatch, randomQuestionData, totalQuestionsData]);
 
-  const handleButtonClick = async (id) => {
-    dispatch(setActiveButtonId(id));
+  const handleButtonClick = async (answerId) => {
+    dispatch(setActiveButtonId(answerId));
     const data = {
       questionId: randomQuestionData?.data?._id,
-      answerId: id,
+      answerId: answerId,
+      contextId: id,
     };
     try {
       const res = await submitAnswer(data).unwrap();
@@ -70,15 +81,53 @@ const ContextWiseQus = () => {
     try {
       const res = await insertLeaderBoardData(formatedData).unwrap();
       if (res?.success) {
-        dispatch({ type: "@@INIT" });
+        dispatch({ type: "RESET_ALL_SLICES" });
         navigate("/congratulations", { state: { id: id } });
       }
     } catch (err) {
       console.log(err);
     }
   };
+  const handleCancel = async () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await deleteResponse(id).unwrap();
+          if (res?.success) {
+            Swal.fire({
+              title: "Deleted!",
+              text: `${res?.message}`,
+              icon: "success",
+            });
+
+            navigate("/");
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    });
+  };
   const isLastQuestion =
     totalQuestionsData?.data?.result?.length === totalAnswers;
+
+  if (!randomQuestionData?.data) {
+    return (
+      <div className="d-flex align-items-center justify-content-center vh-100">
+        <div className="text-center">
+          <NoData />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="text-center">
@@ -124,7 +173,9 @@ const ContextWiseQus = () => {
         })}
       </div>
       <div className="flex justify-content-between">
-        <button className="nav-btn my-4 py-2 status-btn">Cancel</button>
+        <button className="nav-btn my-4 py-2 status-btn" onClick={handleCancel}>
+          Cancel
+        </button>
         {isLastQuestion ? (
           <button
             className="green-btn green-button-shadow py-2"

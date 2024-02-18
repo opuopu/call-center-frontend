@@ -18,8 +18,16 @@ const quizSlice = createSlice({
     resetProgress: (state, action) => {
       state.progress = 0;
     },
+    resetAllQuizSlices: (state, action) => {
+      state.progress = 0;
+      state.perQuestionProgress = 0;
+    },
   },
 });
-export const { incrementProgress, resetProgress, calculatePerProgress } =
-  quizSlice.actions;
+export const {
+  incrementProgress,
+  resetProgress,
+  calculatePerProgress,
+  resetAllQuizSlices,
+} = quizSlice.actions;
 export default quizSlice.reducer;

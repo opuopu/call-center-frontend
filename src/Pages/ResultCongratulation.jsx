@@ -1,13 +1,36 @@
 import React from "react";
 import Star from "../assets/Vector.png";
-import { useAllQuizQuery } from "../Redux/api/quizApi";
-import { Link, useParams, useLocation } from "react-router-dom";
-import { useCalculateTotalScoresQuery } from "../Redux/api/userResponseApi.js";
 
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
+import { useCalculateTotalScoresQuery } from "../Redux/api/userResponseApi.js";
+import Swal from "sweetalert2";
+import { useAppDispatch } from "../Redux/hooks.js";
+import { resetAllQuestionSlices } from "../Redux/features/Question/QuestionSlice.js";
+import { resetAllQuizSlices } from "../Redux/features/quiz/QuizSlice.js";
 function ResultCongratulation() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { data: scoreData } = useCalculateTotalScoresQuery(location.state.id);
-  console.log(scoreData);
+  const handleContinue = () => {
+    Swal.fire({
+      title: "Do You Want To Start A New Practice Quiz?",
+      showDenyButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: `No`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        dispatch(resetAllQuizSlices());
+        dispatch(resetAllQuestionSlices());
+        navigate("/context-qus");
+      } else if (result.isDenied) {
+        dispatch(resetAllQuizSlices());
+        dispatch(resetAllQuestionSlices());
+        navigate("/leaderboard");
+      }
+    });
+  };
   return (
     <>
       <div
@@ -42,11 +65,13 @@ function ResultCongratulation() {
                 {/* <button className="green-btn green-button-shadow">
                   Review Answers
                 </button> */}
-                <Link to={"/"}>
-                  <button className="blue-btn blue-button-shadow">
-                    Continue
-                  </button>
-                </Link>
+
+                <button
+                  className="blue-btn blue-button-shadow"
+                  onClick={handleContinue}
+                >
+                  Continue
+                </button>
               </div>
             </div>
           </div>

@@ -4,11 +4,6 @@ import { useGetRandomContextQuery } from "../../Redux/api/quizApi";
 import { Link, useNavigate } from "react-router-dom";
 
 function AccordionCompo() {
-  const { data: randomContextData } = useGetRandomContextQuery(undefined);
-  console.log(randomContextData);
-
-  const navigate = useNavigate();
-
   // const handleNextQuestion = () => {
   //   navigate('/quiz-home-sentence', { state: { quizData } })
   // }
@@ -16,7 +11,7 @@ function AccordionCompo() {
   return (
     <>
       <div>
-        <Link to={`/context-qus/${randomContextData?.data?._id}`}>
+        <Link to={`/context-qus`}>
           <button className="green-btn green-button-shadow py-2">
             Start Practice Session
           </button>

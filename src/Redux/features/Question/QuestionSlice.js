@@ -29,6 +29,12 @@ const questionSlice = createSlice({
       state.activeButtonId = null;
       state.correctAnswerId = null;
     },
+    resetAllQuestionSlices(state, action) {
+      state.totalScores = 0;
+      state.totalAnswers = 0;
+      state.correctAnswerId = null;
+      state.activeButtonId = null;
+    },
   },
 });
 export const {
@@ -37,5 +43,6 @@ export const {
   setActiveButtonId,
   resetIds,
   setTotalAnswers,
+  resetAllQuestionSlices,
 } = questionSlice.actions;
 export default questionSlice.reducer;
