@@ -1,9 +1,10 @@
 import React from "react";
-import { Upload } from "antd";
+import { Upload, Tooltip } from "antd";
 
-const Uplaod = ({ setSelectedFile }) => {
+const Uplaod = ({ setSelectedFile, disabled, text }) => {
   const props = {
     name: "file",
+    disabled: disabled,
     multiple: false,
     showUploadList: false,
     customRequest: ({ file }) => {
@@ -15,17 +16,19 @@ const Uplaod = ({ setSelectedFile }) => {
   };
   return (
     <Upload {...props}>
-      <button
-        onClick={(e) => handleButton(e)}
-        style={{
-          border: 0,
-          backgroundColor: "#54C999",
-          color: "#fff",
-          borderRadius: "3px",
-        }}
-      >
-        Choose File
-      </button>
+      <Tooltip placement="bottom" title={text}>
+        <button
+          onClick={(e) => handleButton(e)}
+          style={{
+            border: 0,
+            backgroundColor: "#54C999",
+            color: "#fff",
+            borderRadius: "3px",
+          }}
+        >
+          Choose File
+        </button>
+      </Tooltip>
     </Upload>
   );
 };

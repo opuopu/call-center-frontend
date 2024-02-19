@@ -42,7 +42,7 @@
   padding: 4px 6px;
 }
 
-.profile_image{
+.profile_image {
   height: 75px;
   width: 75px;
   border-radius: 8rem;
@@ -78,4 +78,20 @@
   .input-div input {
     width: 200px;
   }
+}
+.input {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: "1px solid #ddd";
+  border-radius: 0 !important;
+  background-color: white !important;
+}
+.input:hover {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: "1px solid #ddd";
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }

@@ -30,6 +30,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import QuizHomeSentence from "./Pages/QuizHomeSentece";
 import ContextWiseQus from "./Components/ContextWiseQus/ContextWiseQus";
+import PrivateRoutes from "./Routes/PrivateRoutes.jsx";
 
 function App() {
   return (
@@ -38,15 +39,38 @@ function App() {
         <Router>
           <NavbarCompo />
           <Routes>
-            <Route exact path="/" element={<DashboardHome />}>
+            <Route
+              exact
+              path="/"
+              element={
+                <PrivateRoutes>
+                  <DashboardHome />
+                </PrivateRoutes>
+              }
+            >
               {/* <Route
                 path="/context-qus/:id"
                 element={<ContextWiseQus />}
               /> */}
             </Route>
-            <Route exact path="/:id/:id/:id/:id" element={<MyProfile />} />
+            <Route
+              exact
+              path="/:id/:id/:id/:id"
+              element={
+                <PrivateRoutes>
+                  <MyProfile />
+                </PrivateRoutes>
+              }
+            />
             <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/my-profile" element={<MyProfile />} />
+            <Route
+              path="/my-profile"
+              element={
+                <PrivateRoutes>
+                  <MyProfile />
+                </PrivateRoutes>
+              }
+            />
             <Route path="/team" element={<Team />} />
             <Route path="/difficulty" element={<Home />} />
             <Route path="/question-state" element={<QuestionState />} />

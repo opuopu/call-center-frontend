@@ -3,13 +3,16 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import "./User.css";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSignInMutation } from "../../Redux/api/authApi";
 import { setUser } from "../../Redux/features/auth/authSlice";
 
 function UserLogin() {
   const dispatch = useDispatch();
   const Navigate = useNavigate();
+  const location = useLocation();
+  const form = location?.state?.from?.pathname || "/";
+  console.log(location, form);
   const [inputData, setInputData] = useState({
     email: "",
     password: "",
@@ -21,7 +24,7 @@ function UserLogin() {
     e.preventDefault();
     try {
       const response = await signInUser(inputData).unwrap();
-      console.log("res", response);
+
       if (response) {
         const userInfo = {
           ...response.data.user,
@@ -33,7 +36,7 @@ function UserLogin() {
         );
       }
       Swal.fire(response?.message, "", "success");
-      Navigate("/");
+      Navigate(form, { replace: true });
     } catch (err) {
       console.log(err);
       Swal.fire(err?.data?.message, "", "error");

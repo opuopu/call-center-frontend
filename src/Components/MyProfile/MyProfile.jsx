@@ -20,6 +20,7 @@ import ImageGenerator from "../../utils/Image.jsx";
 import Loading from "../../utils/Loading.jsx";
 function MyProfileComp() {
   const [modal, setModal] = useState(false);
+  const [edit, setEdit] = useState(true);
   const { setFile, imageUrl, imageFile } = useImageUpload();
   const { _id } = useAppSelector(useCurrentUser) || {};
   const { data: profileData } = useProfileQuery(_id);
@@ -38,9 +39,15 @@ function MyProfileComp() {
       formData.append("data", JSON.stringify(data));
       const res = await updateProfile(formData).unwrap();
       Swal.fire(res?.message, "", "success");
+      setEdit((prev) => !prev);
     } catch (err) {
       Swal.fire(err?.data?.message, "", "error");
     }
+  };
+
+  const handleEditStatus = (e) => {
+    e.preventDefault();
+    setEdit((prev) => !prev);
   };
   // set default value
   useEffect(() => {
@@ -68,7 +75,7 @@ function MyProfileComp() {
       <div className="d-flex justify-content-end">
         <button
           onClick={handleModal}
-          className="nav-btn nav-btn-shadow save-btn my-2 "
+          className="nav-btn nav-btn-shadow save-btn mb-4  "
           style={{
             backgroundColor: "#54C999",
           }}
@@ -77,40 +84,60 @@ function MyProfileComp() {
         </button>
       </div>
 
-      <div className="w-50 mx-auto  my-auto  ">
-        <Form layout="vertical" onFinish={onFinish} form={form}>
-          <Form.Item>
-            <div className="d-flex justify-content-center align-items-center">
-              <img
-                style={{
-                  objectFit: "cover",
-                }}
-                className="mx-2 profile_image border-0 "
-                width={60}
-                src={
-                  imageUrl ||
-                  ImageGenerator(profileData?.data?.image) ||
-                  profileImage
-                }
-                alt=""
-              />
-              <Uplaod setSelectedFile={setFile} />
-            </div>
-          </Form.Item>
+      <div
+        className="w-full mx-auto  my-auto  "
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-around",
+        }}
+      >
+        <div className="d-flex flex-column align-items-center shadow-sm p-4">
+          <img
+            style={{
+              width: "220px",
+              height: "220px",
+              border: "2px solid #54C999",
+              borderRadius: "50%",
+              marginBottom: "6px",
+              objectFit: "cover",
+            }}
+            className="img-fluid "
+            src={
+              imageUrl ||
+              ImageGenerator(profileData?.data?.image) ||
+              profileImage
+            }
+            alt=""
+          />
+          <Uplaod
+            setSelectedFile={setFile}
+            disabled={edit}
+            text="click on edit button to upload "
+          />
+        </div>
 
+        <Form
+          disabled={edit}
+          layout="vertical"
+          onFinish={onFinish}
+          form={form}
+          className="w-75 shadow-sm p-4"
+          style={{}}
+        >
           <Form.Item
             key="userName"
             name="userName"
             label={<p className="m-0">User Name</p>}
           >
-            <Input className="py-2" placeholder="enter user name" />
+            <Input className="py-2 input" placeholder="enter user name" />
           </Form.Item>
           <Form.Item
             key="name"
             name="name"
             label={<p className="m-0">Full Name</p>}
           >
-            <Input className="py-2" placeholder="enter full Name" />
+            <Input className="py-2 input" placeholder="enter full Name" />
           </Form.Item>
 
           <Form.Item
@@ -118,18 +145,41 @@ function MyProfileComp() {
             name="email"
             label={<p className="m-0">Email</p>}
           >
-            <Input className="py-2" placeholder="enter email" />
+            <Input className="py-2 input" placeholder="enter email" />
           </Form.Item>
-          <Form.Item className="d-flex  justify-content-center">
-            <button
-              type="submit"
-              style={{
-                backgroundColor: "#54C999",
-              }}
-              className="nav-btn nav-btn-shadow save-btn my-2"
-            >
-              {isLoading ? <Loading /> : "Update Profile"}
-            </button>
+          <Form.Item className="d-flex  justify-content-end">
+            {edit ? (
+              <button
+                onClick={handleEditStatus}
+                style={{
+                  backgroundColor: "#000",
+                }}
+                className="nav-btn save-btn my-2  fw-bold"
+              >
+                Edit
+              </button>
+            ) : (
+              <div className="d-flex align-items-center gap-2">
+                <button
+                  type="submit"
+                  style={{
+                    backgroundColor: "#54C999",
+                  }}
+                  className="nav-btn save-btn my-2 fw-bold"
+                >
+                  {isLoading ? <Loading /> : "Update Profile"}
+                </button>
+                <button
+                  onClick={handleEditStatus}
+                  style={{
+                    backgroundColor: "#000",
+                  }}
+                  className="nav-btn save-btn my-2 fw-bold"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
           </Form.Item>
         </Form>
       </div>
