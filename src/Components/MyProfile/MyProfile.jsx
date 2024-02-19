@@ -113,7 +113,7 @@ function MyProfileComp() {
           <Uplaod
             setSelectedFile={setFile}
             disabled={edit}
-            text="click on edit button to upload "
+            text="Click on the edit button to upload."
           />
         </div>
 
