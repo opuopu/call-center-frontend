@@ -4,6 +4,7 @@ import {
   useCurrentToken,
   useCurrentUser,
 } from "../Redux/features/auth/authSlice.js";
+import { useLocation } from "react-router-dom";
 import { userRole } from "../Constant/Constant.jsx";
 import sidebarItemsGenerator from "../utils/sidebarItemsGenerator.js";
 import { managerPath } from "../Routes/ManagerRoutes.jsx";
@@ -13,9 +14,10 @@ import logo from "../assets/logo.png";
 const { Sider } = Layout;
 const Sidebar = () => {
   const token = useAppSelector(useCurrentToken);
+  const { pathname } = useLocation();
   const user = useAppSelector(useCurrentUser);
   const collapsed = useAppSelector((state) => state.layout.collapsed);
-  console.log(collapsed);
+
   let sidebarItems;
 
   switch (user?.role) {
@@ -48,6 +50,7 @@ const Sidebar = () => {
         <Menu
           theme="white"
           mode="inline"
+          selectedKeys={[pathname]}
           defaultSelectedKeys={["1"]}
           items={sidebarItems}
         />
