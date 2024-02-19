@@ -16,6 +16,7 @@ import QuizSlice from "./features/quiz/QuizSlice.js";
 import QuestionSlice from "./features/Question/QuestionSlice.js";
 import leaderboardSlice from "./features/leaderboard/leaderboardSlice.js";
 import { resetMiddleware } from "./middlware/Index.js";
+import LayoutSlice from "./features/LayoutSlice/LayoutSlice.js";
 
 const persistConfig = {
   key: "auth",
@@ -31,6 +32,7 @@ export const store = configureStore({
     quiz: QuizSlice,
     question: QuestionSlice,
     leaderBoard: leaderboardSlice,
+    layout: LayoutSlice,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({

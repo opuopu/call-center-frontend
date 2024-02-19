@@ -159,9 +159,8 @@ function Team() {
           <EditUser setShowModal={setmodal2} id={id} />
         </CustomModal>
       )}
-      <div className="d-flex">
-        <DashboardSidebar />
-        <div className="d-flex  justify-content-center align-items-center flex-grow-1">
+      <div className="container">
+        <div className="d-flex justify-content-center align-items-center">
           <div className="container">
             <div className="d-flex justify-content-end mb-4 ">
               <button
