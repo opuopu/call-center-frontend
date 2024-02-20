@@ -1,5 +1,7 @@
 import AccordionCompo from "../Components/AccordionCompo/AccordionCompo.jsx";
+import ContextWiseQus from "../Components/ContextWiseQus/ContextWiseQus.jsx";
 import Leaderboard from "../Pages/Leaderboard.jsx";
+import ResultCongratulation from "../Pages/ResultCongratulation.jsx";
 
 export const userPath = [
   {
@@ -16,5 +18,13 @@ export const userPath = [
     name: "Profile",
     path: "Profile",
     element: <Leaderboard />,
+  },
+  {
+    path: "context-qus",
+    element: <ContextWiseQus />,
+  },
+  {
+    path: "congratulations",
+    element: <ResultCongratulation />,
   },
 ];

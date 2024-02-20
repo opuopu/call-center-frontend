@@ -1,12 +1,17 @@
 export const sidebardThemes = {
   components: {
     Menu: {
-      itemSelectedBg: "rgb(255, 255, 255)",
-      itemSelectedColor: "black",
-      borderRadius: 0,
-      borderRadiusLG: 0,
+      itemSelectedBg: "#54C999",
+      itemSelectedColor: "white",
+      itemColor: "#54C999",
+      itemActiveBg: "#54C999",
+      itemHoverColor: "white",
+      itemHoverBg: "#54C999",
+      // borderRadius: 10,
+      // borderRadiusLG: 12,
       subMenuItemBg: "rgba(255, 255, 255, 0.02)",
-      itemMarginInline: 0,
+      itemMarginInline: 10,
+      iconSize: 20,
     },
 
     Dropdown: {

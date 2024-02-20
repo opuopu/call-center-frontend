@@ -6,6 +6,9 @@ import { MdOutlineQuiz, MdLeaderboard } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { RiTeamFill } from "react-icons/ri";
 import Team from "../Pages/Team.jsx";
+import ContextWiseQus from "../Components/ContextWiseQus/ContextWiseQus.jsx";
+import ResultCongratulation from "../Pages/ResultCongratulation.jsx";
+import Dashboard from "../Pages/Dashboard/Dashboard.jsx";
 
 export const managerPath = [
   {
@@ -32,5 +35,13 @@ export const managerPath = [
     path: "Profile",
     icon: <CgProfile />,
     element: <MyProfileComp />,
+  },
+  {
+    path: "context-qus",
+    element: <ContextWiseQus />,
+  },
+  {
+    path: "congratulations",
+    element: <ResultCongratulation />,
   },
 ];

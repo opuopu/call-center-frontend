@@ -5,14 +5,15 @@ import "./User.css";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSignInMutation } from "../../Redux/api/authApi";
-import { setUser } from "../../Redux/features/auth/authSlice";
+import { setUser, useCurrentUser } from "../../Redux/features/auth/authSlice";
+import { useAppSelector } from "../../Redux/hooks.js";
 
 function UserLogin() {
   const dispatch = useDispatch();
+  const { role } = useAppSelector(useCurrentUser) || {};
   const Navigate = useNavigate();
   const location = useLocation();
-  const form = location?.state?.from?.pathname || "/";
-  console.log(location, form);
+
   const [inputData, setInputData] = useState({
     email: "",
     password: "",
@@ -36,7 +37,12 @@ function UserLogin() {
         );
       }
       Swal.fire(response?.message, "", "success");
-      Navigate(form, { replace: true });
+      Navigate(
+        location?.state?.from?.pathname || `/${response?.data?.user?.role}`,
+        {
+          replace: true,
+        }
+      );
     } catch (err) {
       console.log(err);
       Swal.fire(err?.data?.message, "", "error");

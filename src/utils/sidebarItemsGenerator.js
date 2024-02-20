@@ -1,12 +1,24 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const sidebarItemsGenerator = (items, role) => {
   const sidebarItems = items.reduce((acc, item) => {
     if (item.path && item.name) {
       acc.push({
-        key: item?.name,
+        key: item.name,
         icon: item?.icon,
-        label: <Link to={`/${role}/${item?.path}`}>{item?.name}</Link>,
+        label: (
+          <Link style={{ textDecoration: "none" }} to={`/${role}/${item.path}`}>
+            <p
+              style={{
+                margin: "auto 0",
+                fontWeight: "600",
+                fontSize: "18px",
+              }}
+            >
+              {item.name}
+            </p>
+          </Link>
+        ),
       });
     }
     if (item.children) {

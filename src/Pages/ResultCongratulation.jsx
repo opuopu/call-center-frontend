@@ -4,14 +4,16 @@ import Star from "../assets/Vector.png";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { useCalculateTotalScoresQuery } from "../Redux/api/userResponseApi.js";
 import Swal from "sweetalert2";
-import { useAppDispatch } from "../Redux/hooks.js";
+import { useAppDispatch, useAppSelector } from "../Redux/hooks.js";
 import { resetAllQuestionSlices } from "../Redux/features/Question/QuestionSlice.js";
 import { resetAllQuizSlices } from "../Redux/features/quiz/QuizSlice.js";
+import { useCurrentUser } from "../Redux/features/auth/authSlice.js";
 function ResultCongratulation() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { data: scoreData } = useCalculateTotalScoresQuery(location.state.id);
+  const { role } = useAppSelector(useCurrentUser) || {};
+  const { data: scoreData } = useCalculateTotalScoresQuery(location?.state?.id);
   const handleContinue = () => {
     Swal.fire({
       title: "Do You Want To Start A New Practice Quiz?",
@@ -23,11 +25,11 @@ function ResultCongratulation() {
       if (result.isConfirmed) {
         dispatch(resetAllQuizSlices());
         dispatch(resetAllQuestionSlices());
-        navigate("/context-qus");
+        navigate(`/${role}/context-qus`);
       } else if (result.isDenied) {
         dispatch(resetAllQuizSlices());
         dispatch(resetAllQuestionSlices());
-        navigate("/leaderboard");
+        navigate(`/${role}/leaderboard`);
       }
     });
   };

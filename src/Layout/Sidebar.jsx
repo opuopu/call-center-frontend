@@ -25,12 +25,16 @@ const Sidebar = () => {
       sidebarItems = sidebarItemsGenerator(managerPath, userRole.MANAGER);
       break;
     case userRole.USER:
-      sidebarItems = sidebarItemsGenerator(userPath, userRole.MANAGER);
+      sidebarItems = sidebarItemsGenerator(userPath, userRole.USER);
       break;
     default:
       break;
   }
-
+  console.log(pathname);
+  const items = [
+    { key: "1", label: "hello" },
+    { key: "/manager/pathname", label: "hello" },
+  ];
   return (
     <Sider
       width="220px"
@@ -40,21 +44,19 @@ const Sidebar = () => {
       style={{
         backgroundColor: "white",
         height: "100vh",
-        borderRight: "1px solid black",
+        boxShadow: "12px 0px 42px 0px rgba(0, 0, 0, 0.05)",
         overflow: "auto",
         position: "fixed",
       }}
     >
-      <div>
-        <img src={logo} className="w-100 mx-auto d-block my-2 px-2" alt="" />
-        <Menu
-          theme="white"
-          mode="inline"
-          selectedKeys={[pathname]}
-          defaultSelectedKeys={["1"]}
-          items={sidebarItems}
-        />
-      </div>
+      <img src={logo} className="w-100 mx-auto d-block my-2 px-2" alt="" />
+      <Menu
+        theme="dark"
+        mode="inline"
+        selectedKeys={[pathname]}
+        defaultSelectedKeys={pathname}
+        items={items}
+      />
     </Sider>
   );
 };

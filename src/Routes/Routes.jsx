@@ -5,8 +5,14 @@ import MainLayout from "../Layout/MainLayout.jsx";
 import routeGenerator from "../utils/routeGenerator.js";
 import { managerPath } from "./ManagerRoutes.jsx";
 import { userPath } from "./UserRoutes.jsx";
+import Dashboard from "../Pages/Dashboard/Dashboard.jsx";
+import App from "../App.js";
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App></App>,
+  },
   {
     path: "/manager",
     element: (
@@ -14,7 +20,13 @@ const router = createBrowserRouter([
         <MainLayout></MainLayout>
       </PrivateRoutes>
     ),
-    children: routeGenerator(managerPath),
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      ...routeGenerator(managerPath),
+    ],
   },
   {
     path: "/user",
@@ -23,7 +35,13 @@ const router = createBrowserRouter([
         <MainLayout></MainLayout>
       </PrivateRoutes>
     ),
-    children: routeGenerator(userPath),
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      ...routeGenerator(managerPath),
+    ],
   },
   {
     path: "/user-login",

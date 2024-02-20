@@ -29,10 +29,12 @@ import {
 } from "../../Redux/features/quiz/QuizSlice.js";
 import { useInsertDataIntoLeaderboardMutation } from "../../Redux/api/leaderboardApi.js";
 import NoData from "../NoData/NoData.jsx";
+import { useCurrentUser } from "../../Redux/features/auth/authSlice.js";
 
 const ContextWiseQus = () => {
   const { data: randomContextData } = useGetRandomContextQuery(undefined);
   const id = randomContextData?.data?._id;
+  const { role } = useAppSelector(useCurrentUser);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data: randomQuestionData, refetch } = useGetRandomQestionsQuery(id);
@@ -82,7 +84,7 @@ const ContextWiseQus = () => {
       const res = await insertLeaderBoardData(formatedData).unwrap();
       if (res?.success) {
         dispatch({ type: "RESET_ALL_SLICES" });
-        navigate("/congratulations", { state: { id: id } });
+        navigate(`/${role}/congratulations`, { state: { id: id } });
       }
     } catch (err) {
       console.log(err);
