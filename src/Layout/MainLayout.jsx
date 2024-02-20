@@ -72,6 +72,7 @@ const MainLayout = () => {
           collapsible
           collapsed={collapsed}
           style={{
+            zIndex: 999,
             backgroundColor: "white",
             height: "100vh",
             boxShadow: "12px 0px 42px 0px rgba(0, 0, 0, 0.05)",
@@ -98,13 +99,15 @@ const MainLayout = () => {
         <Layout>
           <Header
             style={{
+              position: "sticky",
+              zIndex: 0,
               background: "white",
               display: "flex",
               justifyContent: "space-between",
 
               alignItems: "center",
               paddingRight: "65px",
-              boxShadow: " 0px 6px 0px 0px rgba(0, 0, 0, 0.10)",
+              boxShadow: "0px 9px 11px 5px rgba(0, 0, 0, 0.02)",
             }}
           >
             <div>
