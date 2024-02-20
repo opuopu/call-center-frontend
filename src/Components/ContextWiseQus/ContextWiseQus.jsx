@@ -30,6 +30,8 @@ import {
 import { useInsertDataIntoLeaderboardMutation } from "../../Redux/api/leaderboardApi.js";
 import NoData from "../NoData/NoData.jsx";
 import { useCurrentUser } from "../../Redux/features/auth/authSlice.js";
+import GreatAlert from "../GreatAlert/GreatAlert.jsx";
+import WrongAlert from "../WrongAlert/WrongAlert.jsx";
 
 const ContextWiseQus = () => {
   const { data: randomContextData } = useGetRandomContextQuery(undefined);
@@ -38,6 +40,7 @@ const ContextWiseQus = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data: randomQuestionData, refetch } = useGetRandomQestionsQuery(id);
+  console.log(randomQuestionData, "random");
   const [submitAnswer] = useInserUserResponseMutation();
   const [deleteResponse] = useDeleteResponsesMutation();
   const [insertLeaderBoardData, { isLoading }] =
@@ -47,7 +50,7 @@ const ContextWiseQus = () => {
   const { data: signleQuizData } = useSingleQuizQuery(id);
   const progress = useAppSelector((state) => state.quiz.progress);
   const { totalAnswers } = useAppSelector((state) => state.question);
-  const { activeButtonId, correctAnswerId } = useAppSelector(
+  const { activeButtonId, correctAnswerId, correctAnswer } = useAppSelector(
     (state) => state?.question
   );
   const { perQuestionProgress } = useAppSelector((state) => state?.quiz);
@@ -158,9 +161,15 @@ const ContextWiseQus = () => {
                   backgroundColor:
                     activeButtonId === elem?._id
                       ? correctAnswerId === elem?._id
-                        ? "green"
+                        ? "#54C999"
                         : "red"
                       : "white",
+                  color:
+                    activeButtonId === elem?._id
+                      ? correctAnswerId === elem?._id
+                        ? "white"
+                        : "white"
+                      : "black",
                   padding: "8px",
                   width: "48rem",
                   marginTop: "20px",
@@ -187,6 +196,7 @@ const ContextWiseQus = () => {
           </button>
         ) : (
           <button
+            disabled={!activeButtonId}
             className="green-btn green-button-shadow py-2"
             onClick={handleNextBtn}
           >
@@ -194,6 +204,10 @@ const ContextWiseQus = () => {
           </button>
         )}
       </div>
+      {activeButtonId && activeButtonId === correctAnswerId && <GreatAlert />}
+      {activeButtonId && activeButtonId !== correctAnswerId && (
+        <WrongAlert title={correctAnswer?.text} />
+      )}
     </div>
   );
 };
