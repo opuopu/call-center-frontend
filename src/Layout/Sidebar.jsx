@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAppSelector } from "../Redux/hooks.js";
-import {
-  useCurrentToken,
-  useCurrentUser,
-} from "../Redux/features/auth/authSlice.js";
+import { useCurrentUser } from "../Redux/features/auth/authSlice.js";
 import { useLocation } from "react-router-dom";
 import { userRole } from "../Constant/Constant.jsx";
 import sidebarItemsGenerator from "../utils/sidebarItemsGenerator.js";
@@ -11,13 +8,11 @@ import { managerPath } from "../Routes/ManagerRoutes.jsx";
 import { userPath } from "../Routes/UserRoutes.jsx";
 import { Layout, Menu } from "antd";
 import logo from "../assets/logo.png";
+import footerLogo from "../assets/Call Center Coach Logo-F 1 (1).png";
 const { Sider } = Layout;
 const Sidebar = () => {
-  const token = useAppSelector(useCurrentToken);
-  const { pathname } = useLocation();
-  const user = useAppSelector(useCurrentUser);
   const collapsed = useAppSelector((state) => state.layout.collapsed);
-
+  const user = useAppSelector(useCurrentUser);
   let sidebarItems;
 
   switch (user?.role) {
@@ -27,21 +22,19 @@ const Sidebar = () => {
     case userRole.USER:
       sidebarItems = sidebarItemsGenerator(userPath, userRole.USER);
       break;
+
     default:
       break;
   }
-  console.log(pathname);
-  const items = [
-    { key: "1", label: "hello" },
-    { key: "/manager/pathname", label: "hello" },
-  ];
+
   return (
     <Sider
-      width="220px"
+      width={250}
       trigger={null}
       collapsible
       collapsed={collapsed}
       style={{
+        zIndex: 999,
         backgroundColor: "white",
         height: "100vh",
         boxShadow: "12px 0px 42px 0px rgba(0, 0, 0, 0.05)",
@@ -51,11 +44,18 @@ const Sidebar = () => {
     >
       <img src={logo} className="w-100 mx-auto d-block my-2 px-2" alt="" />
       <Menu
-        theme="dark"
+        style={{
+          marginTop: "10px",
+        }}
         mode="inline"
-        selectedKeys={[pathname]}
-        defaultSelectedKeys={pathname}
-        items={items}
+        defaultSelectedKeys={["1"]}
+        items={sidebarItems}
+      />
+      <img
+        className="img-fluid"
+        src={footerLogo}
+        alt=""
+        style={{ position: "absolute", bottom: 0 }}
       />
     </Sider>
   );
