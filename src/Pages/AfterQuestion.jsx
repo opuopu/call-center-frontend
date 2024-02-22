@@ -2,7 +2,6 @@ import React from "react";
 import ProgressBar from "../Components/ProgressBar/ProgressBarCompo";
 import SpeakerContainer from "../Components/SpeakerContainer/SpeakerContainer";
 import { Container } from "react-bootstrap";
-import SoundWaves from "../../src/assets/sound-waves 1.png";
 import MicButton from "../Components/MicButton/MicButton";
 
 function AfterQuestion() {

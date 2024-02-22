@@ -1,13 +1,14 @@
 import React from "react";
 import Star from "../assets/Vector.png";
 
-import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
 import { useCalculateTotalScoresQuery } from "../Redux/api/userResponseApi.js";
 import Swal from "sweetalert2";
 import { useAppDispatch, useAppSelector } from "../Redux/hooks.js";
 import { resetAllQuestionSlices } from "../Redux/features/Question/QuestionSlice.js";
 import { resetAllQuizSlices } from "../Redux/features/quiz/QuizSlice.js";
 import { useCurrentUser } from "../Redux/features/auth/authSlice.js";
+
 function ResultCongratulation() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ function ResultCongratulation() {
   const { data: scoreData } = useCalculateTotalScoresQuery(location?.state?.id);
   const handleContinue = () => {
     Swal.fire({
-      title: "Do You Want To Start A New Practice Quiz?",
+      title: "Do you want to start a new practice quiz?",
       showDenyButton: true,
       confirmButtonText: "Yes",
       denyButtonText: `No`,
@@ -33,6 +34,7 @@ function ResultCongratulation() {
       }
     });
   };
+  
   return (
     <>
       <div

@@ -1,13 +1,14 @@
 import React from "react";
 import { useAppSelector } from "../../Redux/hooks.js";
 import { useCurrentUser } from "../../Redux/features/auth/authSlice.js";
+import { Container } from "react-bootstrap";
 
 const Dashboard = () => {
   const user = useAppSelector(useCurrentUser);
   return (
-    <div className="d-flex justify-content-center align-items-center">
-      <h1 className="">Welcome back, {user?.name}</h1>
-    </div>
+    <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+      <h1 className="text-center" style={{ color: "#54C999" }}>Welcome Back, {user?.name}</h1>
+    </Container>
   );
 };
 

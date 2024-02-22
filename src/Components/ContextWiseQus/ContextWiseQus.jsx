@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ProgressBar from "../../Components/ProgressBar/ProgressBarCompo";
-import { useParams } from "react-router-dom";
 import {
   useGetRandomContextQuery,
   useSingleQuizQuery,

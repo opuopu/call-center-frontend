@@ -38,7 +38,7 @@ const PasswordChangeForm = () => {
   };
   return (
     <div>
-      <h5 className="mb-4">Please Change Your Password</h5>
+      <h5 className="mb-4">Please Change your Password</h5>
       <Form onFinish={onFinish} layout="vertical">
         <Form.Item
           label="Enter Your New Password"
