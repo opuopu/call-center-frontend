@@ -4,7 +4,10 @@ import PasswordChangeForm from "../Components/PasswordChangeForm/PasswordChangeF
 import { Container } from "react-bootstrap";
 const ChangePassword = () => {
   return (
-    <Container className="justify-content-center align-items-center" style={{ height: '100vh' }}>
+    <Container
+      className="justify-content-center align-items-center"
+      style={{ height: "100vh" }}
+    >
       <div className="row mx-auto align-items-center">
         <div className="col-lg-6">
           <img className="img-fluid" src={changePasswordLogo} alt="" />
