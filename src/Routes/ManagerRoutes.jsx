@@ -9,6 +9,7 @@ import Team from "../Pages/Team.jsx";
 import ContextWiseQus from "../Components/ContextWiseQus/ContextWiseQus.jsx";
 import ResultCongratulation from "../Pages/ResultCongratulation.jsx";
 import Dashboard from "../Pages/Dashboard/Dashboard.jsx";
+import ChangePassword from "../Pages/ChangePassword.jsx";
 
 export const managerPath = [
   {
@@ -43,5 +44,9 @@ export const managerPath = [
   {
     path: "congratulations",
     element: <ResultCongratulation />,
+  },
+  {
+    path: "changepassword",
+    element: <ChangePassword />,
   },
 ];

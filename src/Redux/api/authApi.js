@@ -72,6 +72,14 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
+    ChangePassword: builder.mutation({
+      query: (data) => ({
+        url: `/users/change-password/`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
   }),
 });
 
@@ -85,4 +93,5 @@ export const {
   useChangeUserStatusMutation,
   useSingleUserQuery,
   useUpdateUserByManagerMutation,
+  useChangePasswordMutation,
 } = authApi;

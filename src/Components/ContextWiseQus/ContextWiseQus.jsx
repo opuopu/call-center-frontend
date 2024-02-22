@@ -40,7 +40,6 @@ const ContextWiseQus = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data: randomQuestionData, refetch } = useGetRandomQestionsQuery(id);
-  console.log(randomQuestionData, "random");
   const [submitAnswer] = useInserUserResponseMutation();
   const [deleteResponse] = useDeleteResponsesMutation();
   const [insertLeaderBoardData, { isLoading }] =

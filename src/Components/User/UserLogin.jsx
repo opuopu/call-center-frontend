@@ -10,6 +10,7 @@ import { useAppSelector } from "../../Redux/hooks.js";
 
 function UserLogin() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { role } = useAppSelector(useCurrentUser) || {};
   const Navigate = useNavigate();
   const location = useLocation();
@@ -37,12 +38,17 @@ function UserLogin() {
         );
       }
       Swal.fire(response?.message, "", "success");
-      Navigate(
-        location?.state?.from?.pathname || `/${response?.data?.user?.role}`,
-        {
-          replace: true,
-        }
-      );
+
+      if (response?.data?.user?.needPasswordChange) {
+        navigate("/change-password");
+      } else {
+        Navigate(
+          location?.state?.from?.pathname || `/${response?.data?.user?.role}`,
+          {
+            replace: true,
+          }
+        );
+      }
     } catch (err) {
       console.log(err);
       Swal.fire(err?.data?.message, "", "error");
