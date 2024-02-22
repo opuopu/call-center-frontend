@@ -5,8 +5,7 @@ import MyProfileComp from "../Components/MyProfile/MyProfile";
 function MyProfile() {
   return (
     <>
-      <div className="d-flex justify-content-between">
-        <DashboardSidebar />
+      <div className="">
         <MyProfileComp />
       </div>
     </>

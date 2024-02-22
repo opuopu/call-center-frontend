@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   totalAnswers: 0,
   totalScores: 0,
+  correctAnswer: null,
   correctAnswerId: null,
   activeButtonId: null,
 };
@@ -19,9 +20,11 @@ const questionSlice = createSlice({
     setCorrectAnswerId(state, action) {
       const findCorrectAnswer = action?.payload?.answers?.find(
         (ans) => ans?.isCorrect === true
-      )?._id;
-      state.correctAnswerId = findCorrectAnswer;
+      );
+      state.correctAnswerId = findCorrectAnswer?._id;
+      state.correctAnswer = findCorrectAnswer;
     },
+
     setActiveButtonId(state, action) {
       state.activeButtonId = action.payload;
     },

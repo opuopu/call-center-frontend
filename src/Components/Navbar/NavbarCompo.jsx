@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import "./NavbarCompo.css";
-import Logo from "../../assets/Call Center Coach Logo-F 1.png";
+
 import ProfileImage from "../../assets/Group 1.png";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -85,7 +85,6 @@ function NavbarCompo() {
               ""
             )}
 
-            <img width="50" src={Logo} />
             <div>
               <p className="logo-text">CALL CENTER</p>
               <span className="logo-text">COACH</span>

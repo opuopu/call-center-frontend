@@ -65,7 +65,7 @@ function MyProfileComp() {
     profileData?.data?.image,
   ]);
   return (
-    <div className="profile-container">
+    <div className="container">
       {modal && (
         <CustomModal setShowModal={setModal} showModal={modal}>
           <UpdatePassword setShowModal={setModal} />

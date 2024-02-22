@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavbarCompo from "./Components/Navbar/NavbarCompo";
 import Home from "./Pages/Home";
@@ -31,89 +31,24 @@ import axios from "axios";
 import QuizHomeSentence from "./Pages/QuizHomeSentece";
 import ContextWiseQus from "./Components/ContextWiseQus/ContextWiseQus";
 import PrivateRoutes from "./Routes/PrivateRoutes.jsx";
-
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "./Redux/hooks.js";
+import {
+  useCurrentToken,
+  useCurrentUser,
+} from "./Redux/features/auth/authSlice.js";
 function App() {
-  return (
-    <>
-      <C3State>
-        <Router>
-          <NavbarCompo />
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <PrivateRoutes>
-                  <DashboardHome />
-                </PrivateRoutes>
-              }
-            >
-              {/* <Route
-                path="/context-qus/:id"
-                element={<ContextWiseQus />}
-              /> */}
-            </Route>
-            <Route
-              exact
-              path="/:id/:id/:id/:id"
-              element={
-                <PrivateRoutes>
-                  <MyProfile />
-                </PrivateRoutes>
-              }
-            />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route
-              path="/my-profile"
-              element={
-                <PrivateRoutes>
-                  <MyProfile />
-                </PrivateRoutes>
-              }
-            />
-            <Route path="/team" element={<Team />} />
-            <Route path="/difficulty" element={<Home />} />
-            <Route path="/question-state" element={<QuestionState />} />
-            <Route path="/after-question" element={<AfterQuestion />} />
-            <Route path="/button-pressed" element={<ButtonPressed />} />
-            <Route path="/submit-state" element={<SubmitState />} />
-            <Route path="/result" element={<ResultState />} />
-            <Route path="/congratulations" element={<ResultCongratulation />} />
-            <Route path="/home-sentence" element={<HomeSentence />} />
-            {/* ------------------------ */}
-            <Route
-              path="/quiz-home-sentence/:id"
-              element={<QuizHomeSentence />}
-            />
-
-            <Route path="/context-qus/" element={<ContextWiseQus />} />
-            {/* ---------------------------- */}
-
-            <Route
-              path="/home-sentence-answer/:id/:index/:quizId"
-              element={<HomeSentenceAnswer />}
-            />
-            <Route
-              path="/home-sentence-correct"
-              element={<HomeSentenceCorrectAns />}
-            />
-            <Route
-              path="/home-sentence-wrong"
-              element={<HomeSentenceWrong />}
-            />
-            <Route path="/mood-ques-state" element={<MoodeQuesState />} />
-            <Route path="/mood-ans-state" element={<MoodAnswerStat />} />
-            <Route path="/mood-ans-check" element={<MoodAnswerCheck />} />
-            <Route path="/score-board" element={<ScoreBoard />} />
-            <Route path="/register" element={<User />} />
-            <Route path="/user-login" element={<UserLogin />} />
-            <Route path="/change-pass/:email" element={<ChangePass />} />
-            <Route path="/show-teams" element={<AllTeams />} />
-          </Routes>
-        </Router>
-      </C3State>
-    </>
-  );
+  const navigate = useNavigate();
+  const user = useAppSelector(useCurrentUser);
+  const token = useAppSelector(useCurrentToken);
+  useEffect(() => {
+    if (!user?.role && !token) {
+      navigate("/user-login");
+    } else {
+      navigate(`/${user?.role}`);
+    }
+  }, [user, token, navigate]);
+  return <></>;
 }
 
 export default App;

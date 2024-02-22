@@ -5,7 +5,7 @@ const questionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     GetTotalQuestionsUnderContext: builder.query({
       query: (id) => ({
-        url: `questions/${id}`,
+        url: `/questions/${id}`,
         method: "GET",
       }),
     }),
