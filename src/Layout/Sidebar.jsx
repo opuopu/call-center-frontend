@@ -11,6 +11,8 @@ import logo from "../assets/logo.png";
 import footerLogo from "../assets/Call Center Coach Logo-F 1 (1).png";
 const { Sider } = Layout;
 const Sidebar = () => {
+  const { pathname } = useLocation();
+  console.log(pathname);
   const collapsed = useAppSelector((state) => state.layout.collapsed);
   const user = useAppSelector(useCurrentUser);
   let sidebarItems;
@@ -48,7 +50,6 @@ const Sidebar = () => {
           marginTop: "10px",
         }}
         mode="inline"
-        defaultSelectedKeys={["1"]}
         items={sidebarItems}
       />
       <img

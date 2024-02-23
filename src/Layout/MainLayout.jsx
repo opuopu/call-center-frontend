@@ -4,8 +4,10 @@ import { Outlet } from "react-router-dom";
 import { sidebardThemes } from "../Themes/Theme.js";
 import LayoutHeader from "./Header.jsx";
 import Sidebar from "./Sidebar.jsx";
+import { useAppSelector } from "../Redux/hooks.js";
 const MainLayout = () => {
   const { Content } = Layout;
+  const collapsed = useAppSelector((state) => state.layout.collapsed);
   return (
     <ConfigProvider theme={sidebardThemes}>
       <Layout style={{ height: "100%" }}>
@@ -15,21 +17,9 @@ const MainLayout = () => {
           {/* header */}
           <LayoutHeader />
           <Content
-            style={{
-              paddingTop: "20px",
-              height: "100vh",
-              backgroundColor: "white",
-            }}
+            className={`responsive-content ${!collapsed ? "collapsed" : ""}`}
           >
-            <div
-              style={
-                {
-                  // overflow: "auto",
-                }
-              }
-            >
-              <Outlet />
-            </div>
+            <Outlet />
           </Content>
         </Layout>
       </Layout>

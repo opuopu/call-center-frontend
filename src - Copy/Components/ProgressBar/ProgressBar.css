@@ -1,0 +1,21 @@
+.progress-bar-span {
+  height: 18px;
+  border-radius: 14px;
+  width: 95%;
+}
+
+.progress-parent {
+  width: 60%;
+}
+
+.progress-parent img {
+  cursor: pointer;
+}
+
+.progress-bar {
+  background-color: #4ebb8e !important;
+  border: solid #54c999;
+  border-width: 5px 10px;
+  border-radius: 8px;
+  padding: 0px 8px;
+}

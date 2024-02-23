@@ -1,0 +1,110 @@
+.mic-btn {
+  border: none;
+  border-radius: 8rem;
+  padding: 6px 12px;
+  background-color: #54c999;
+  height: 70px;
+  width: 70px;
+  /* box-shadow: 2px 6px #7fab11; */
+}
+
+.gray-mic-btn {
+  border: 4px solid #ececec;
+  border-radius: 8rem;
+  padding: 6px 12px;
+  background: transparent;
+}
+
+.mic-container {
+  height: 350px;
+}
+
+.question-btn-container {
+  max-width: 55%;
+  min-width: 275px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.blue-btn {
+  border-radius: 7px;
+  padding: 4px 18px;
+  height: 50px;
+  width: 150px;
+  border: none;
+  color: white;
+  background-color: #063b6d;
+  font-weight: 500;
+  margin: 4px;
+}
+
+.green-btn {
+  border-radius: 4rem;
+  padding: 4px 18px;
+  border: none;
+  color: white;
+  background-color: #54c999;
+  font-weight: 500;
+  margin: 4px;
+}
+
+.gray-btn {
+  border-radius: 7px;
+  padding: 4px 18px;
+  height: 50px;
+  width: 150px;
+  border: none;
+  color: white;
+  background-color: #54c999;
+  font-weight: 500;
+  margin: 4px;
+}
+
+.press-mic {
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.listen-parent-two {
+  border-radius: 18rem;
+  width: 98px;
+  display: flex;
+  height: 98px;
+  justify-content: center;
+  align-items: center;
+  background: rgba(84, 201, 153, 0.16);
+}
+
+.listen-parent-one {
+  border-radius: 18rem;
+  width: 130px;
+  display: flex;
+  height: 130px;
+  justify-content: center;
+  align-items: center;
+  background: rgba(84, 201, 153, 0.16);
+}
+
+.confirm-btn {
+  border: none;
+  background-color: #54c999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.wave-container {
+  background-color: #ececec;
+  width: 100%;
+  min-width: 250px;
+  max-width: 20%;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

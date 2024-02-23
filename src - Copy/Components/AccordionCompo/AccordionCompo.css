@@ -1,0 +1,178 @@
+* {
+    box-sizing: border-box;
+}
+
+.accordion-flush .accordion-item .accordion-button {
+    height: 95px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px 10px 10px 10px;
+}
+
+.accordion-body {
+    border-top: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0px 0px 10px 10px;
+}
+
+.accordion-button:not(.collapsed) {
+    box-shadow: none;
+    border: 1px solid gray;
+    border-bottom: none !important;
+    border-radius: 10px 10px 0px 0px !important;
+}
+
+.accordion-flush .accordion-item {
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.accordion-item {
+    border-top: none;
+    border: none;
+    margin: 10px 0px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 2px 0px rgb(0 0 0 / 20%);
+}
+
+.accordion-button:focus {
+    box-shadow: none !important;
+}
+
+.accordion-item:last-of-type .accordion-button.collapsed {
+    height: 95px;
+    border: none;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    /* box-shadow: 0px 6px 2px 0px rgb(0 0 0 / 20%); */
+}
+
+.accordion-item {
+    border: none;
+    margin: 20px 0px;
+}
+
+.accordion-heading-left p {
+    font-weight: bold;
+    font-size: 18px;
+    color: #063b6d !important;
+}
+
+.accordion-heading-left p:nth-child(2) {
+    font-weight: 500;
+    color: #54c999 !important;
+}
+
+.parent-heading {
+    width: 50%;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: white !important;
+}
+
+.accordion-heading-right span {
+    color: #54c999;
+    margin: 0px 4px;
+    font-weight: bold;
+}
+
+
+.accordion-button::after {
+    background-image: url("../../assets/Polygon 2.png");
+    background-size: auto !important;
+}
+
+.accordion-button:not(.collapsed)::after {
+    background-image: url("../../assets/Polygon 3.png");
+    transform: none;
+}
+
+.accordion-data-child {
+    width: 33% !important;
+    min-width: 270px;
+    background-color: #54C999;
+    border-radius: 20px;
+    padding: 4px 15px;
+    margin: 4px 8px;
+    color: white;
+}
+
+.accordion-data-child p {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+
+.status-star {
+    border: none;
+    background-color: #4EBB8E;
+    border-radius: 8px;
+    width: auto;
+    width: 60px;
+    padding: 4px 4px;
+    border-radius: 20px;
+}
+
+.status-star span {
+    font-size: 18px;
+    font-weight: bold;
+    padding-right: 6px;
+}
+
+.accordion-data-child div .progress-bar {
+    background-color: #063b6d !important;
+    border: none;
+}
+
+.progress {
+    border-radius: 2.25rem !important;
+}
+
+.status-btn {
+    background-color: #063b6d !important;
+    font-weight: bold;
+    box-shadow: 0px 6px 2px 0px #052F57;
+}
+
+
+.unlock-accordion-child span {
+    font-size: 18px;
+    font-weight: bold;
+
+}
+
+.accordion-data-child-2 {
+    height: 185px;
+    align-self: flex-start;
+}
+
+.accordion-container {
+    min-width: 250px !important;
+}
+
+
+
+@media screen and (max-width: 530px) {
+    .accordion-heading-left p {
+        font-size: 14px;
+    }
+
+    .parent-heading {
+        width: 80%;
+    }
+
+    .accordion-heading-right span {
+        font-size: 14px;
+    }
+
+    .accordion-heading-right img {
+        width: 15px;
+    }
+}
+
+
+@media screen and (max-width:350px) {
+    .accordion-data-child {
+        min-width: 200px !important;
+    }
+}

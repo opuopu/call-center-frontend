@@ -1,0 +1,97 @@
+.nav-container {
+  background-color: white !important;
+  box-shadow: 3px 3px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo-container {
+  line-height: 2px;
+}
+
+.logo-container div p:first-child {
+  color: #063b6d;
+  letter-spacing: 2px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.logo-container div span {
+  color: #54c999;
+  letter-spacing: 2px;
+  font-size: 10px;
+}
+
+.logo-container div {
+  text-align: center;
+}
+
+.nav-btn {
+  border-radius: 4rem;
+  padding: 4px 18px;
+  border: none;
+  color: white;
+}
+
+.nav-btn-shadow {
+  box-shadow: 0px 4px 1px 0px #4ebb8e;
+}
+
+.nav-btn:first-child {
+  background-color: #063b6d;
+}
+
+.nav-btn:last-child {
+  background-color: #54c999;
+}
+
+.navbar-light .navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.hamburger {
+  cursor: pointer;
+  margin: 0px 8px;
+  display: none !important;
+}
+
+@media screen and (max-width: 400px) {
+  .logo-container div p:first-child {
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 1275px) {
+  .hamburger {
+    display: block !important;
+  }
+}
+
+@media screen and (max-width: 485px) {
+  .logo-container div p,
+  span,
+  .logo-text {
+    font-size: 11px !important;
+  }
+
+  .dropdown-img {
+    width: 35px;
+  }
+}
+
+@media screen and (max-width: 370) {
+  .logo-container div p,
+  span,
+  .logo-text {
+    font-size: 8px !important;
+  }
+
+  .dropdown-img,
+  .hamburger {
+    width: 28px;
+  }
+}
