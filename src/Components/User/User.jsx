@@ -191,7 +191,6 @@ function User() {
           <div className="d-flex flex-row justify-content-start w-100 mt-2">
             <input
               onChange={(e) => {
-                console.log(e.target.checked, "e.target.checked");
                 setInputData({ ...inputData, checked: e.target.checked });
               }}
               className="me-2"

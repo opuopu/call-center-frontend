@@ -238,7 +238,7 @@ const ContextWiseQus = () => {
         !activeButtonId &&
         !randomQuestionData?.data && (
           <div>
-            <NoData />
+            <NoData text="Sorry No Context Found!" />
           </div>
         )}
     </div>

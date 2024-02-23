@@ -13,19 +13,19 @@ import {
 function Leaderboard() {
   const user = useSelector(useCurrentUser);
   const { role } = user || {};
-  const { data: managerLeaderboardData } = useRetrivemangerLeaderBoardQuery(
-    user?._id,
-    {
+  const { data: managerLeaderboardData, isLoading: managerLoading } =
+    useRetrivemangerLeaderBoardQuery(user?._id, {
       skip: role !== "manager",
-    }
-  );
-  const { data: userLeaderBoardData } = useRetriveUserLeaderboardQuery(
-    undefined,
-    {
+    });
+  const { data: userLeaderBoardData, isLoading: userLoading } =
+    useRetriveUserLeaderboardQuery(undefined, {
       skip: role !== "user",
-    }
-  );
-
+    });
+  // Combine the data from both queries into a single array
+  const combinedData = [
+    ...(managerLeaderboardData?.data || []),
+    ...(userLeaderBoardData?.data || []),
+  ];
   return (
     <div className="container mt-4">
       {/* <DashboardSidebar /> */}
@@ -38,12 +38,10 @@ function Leaderboard() {
 
       {/* <div className="justify-content-center w-100 responsive-table  d-flex align-items-start flex-column"> */}
 
-      {managerLeaderboardData?.data?.length > 0 && (
-        <ScoreContainer data={managerLeaderboardData} />
-      )}
-      {userLeaderBoardData?.data?.length > 0 && (
-        <ScoreContainer data={userLeaderBoardData} />
-      )}
+      <ScoreContainer
+        data={combinedData}
+        loading={managerLoading || userLoading}
+      />
     </div>
   );
 }

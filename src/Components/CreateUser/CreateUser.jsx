@@ -10,7 +10,11 @@ const CreateUser = ({ setShowModal }) => {
     try {
       const res = await createUser(data).unwrap();
       if (res?.success) {
-        Swal.fire(res?.message, "", "success");
+        Swal.fire({
+          html: `<p style="font-weight:600">Password successfully sent to this email: <span style="color:#54C999;font-weight:600">${data?.email}</span></p>`,
+          icon: "success",
+        });
+
         setShowModal((prev) => !prev);
       }
     } catch (err) {

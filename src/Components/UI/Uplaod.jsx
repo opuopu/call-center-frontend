@@ -16,19 +16,17 @@ const Uplaod = ({ setSelectedFile, disabled, text }) => {
   };
   return (
     <Upload {...props}>
-      <Tooltip placement="bottom" title={text}>
-        <button
-          onClick={(e) => handleButton(e)}
-          style={{
-            border: 0,
-            backgroundColor: "#54C999",
-            color: "#fff",
-            borderRadius: "3px",
-          }}
-        >
-          Choose File
-        </button>
-      </Tooltip>
+      <button
+        onClick={(e) => handleButton(e)}
+        style={{
+          border: 0,
+          backgroundColor: "#54C999",
+          color: "#fff",
+          borderRadius: "3px",
+        }}
+      >
+        Choose File
+      </button>
     </Upload>
   );
 };

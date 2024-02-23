@@ -8,6 +8,8 @@ import { userPath } from "./UserRoutes.jsx";
 import Dashboard from "../Pages/Dashboard/Dashboard.jsx";
 import App from "../App.js";
 import ChangePassword from "../Pages/ChangePassword.jsx";
+import ResetPasswordForm from "../Components/PasswordResetForm/PasswordResetForm.jsx";
+import ResetPassword from "../Pages/ResetPassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/change-password",
     element: <ChangePassword></ChangePassword>,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword></ResetPassword>,
   },
   {
     path: "/manager",
