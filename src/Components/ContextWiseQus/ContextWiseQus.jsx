@@ -31,14 +31,21 @@ import NoData from "../NoData/NoData.jsx";
 import { useCurrentUser } from "../../Redux/features/auth/authSlice.js";
 import GreatAlert from "../GreatAlert/GreatAlert.jsx";
 import WrongAlert from "../WrongAlert/WrongAlert.jsx";
+import "react-loading-skeleton/dist/skeleton.css";
+import QuizSkeleton from "../QuizSkeleton/QuizSkeleton.jsx";
 
 const ContextWiseQus = () => {
-  const { data: randomContextData } = useGetRandomContextQuery(undefined);
+  const { data: randomContextData, isLoading: randomContextLoading } =
+    useGetRandomContextQuery(undefined);
   const id = randomContextData?.data?._id;
   const { role } = useAppSelector(useCurrentUser);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { data: randomQuestionData, refetch } = useGetRandomQestionsQuery(id);
+  const {
+    data: randomQuestionData,
+    refetch,
+    isLoading: randomQuestionLoading,
+  } = useGetRandomQestionsQuery(id);
   const [submitAnswer] = useInserUserResponseMutation();
   const [deleteResponse] = useDeleteResponsesMutation();
   const [insertLeaderBoardData, { isLoading }] =
@@ -122,90 +129,118 @@ const ContextWiseQus = () => {
   const isLastQuestion =
     totalQuestionsData?.data?.result?.length === totalAnswers;
 
-  if (!randomQuestionData?.data) {
-    return (
-      <div className="d-flex align-items-center justify-content-center vh-100">
-        <div className="text-center">
-          <NoData />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="text-center">
-      <ProgressBar
-        now={progress}
-        label={`${progress.toFixed(2)}%`}
-      ></ProgressBar>
-      <p style={{ fontWeight: "400", fontSize: "22px", textAlign: "center" }}>
-        Context: {signleQuizData?.data?.context}
-      </p>
-      <p style={{ fontWeight: "400", fontSize: "22px", textAlign: "center" }}>
-        Qustion: {randomQuestionData?.data?.question}
-      </p>
-
-      <div className="d-flex flex-column justify-content-center">
-        {randomQuestionData?.data?.answers?.map((elem, index) => {
-          return (
-            <div className="" key={index}>
-              <button
-                disabled={activeButtonId}
-                onClick={() => handleButtonClick(elem?._id)}
+      {!randomQuestionLoading && !randomContextLoading ? (
+        <>
+          {randomQuestionData?.data && (
+            <div>
+              <ProgressBar now={progress} label={`${progress.toFixed(2)}%`} />
+              <p
                 style={{
-                  textAlign: "start",
-                  border: "none",
-                  borderRadius: "8px",
-                  backgroundColor:
-                    activeButtonId === elem?._id
-                      ? correctAnswerId === elem?._id
-                        ? "#54C999"
-                        : "red"
-                      : "white",
-                  color:
-                    activeButtonId === elem?._id
-                      ? correctAnswerId === elem?._id
-                        ? "white"
-                        : "white"
-                      : "black",
-                  padding: "8px",
-                  width: "48rem",
-                  marginTop: "20px",
-                  boxShadow: "0px 1.5px 0px 4px #ececec",
-                  //   pointerEvents: apiStatus ? "none" : "auto",
+                  fontWeight: "400",
+                  fontSize: "22px",
+                  textAlign: "center",
                 }}
               >
-                {elem?.text}
-              </button>
+                Context: {signleQuizData?.data?.context}
+              </p>
+              <p
+                style={{
+                  fontWeight: "400",
+                  fontSize: "22px",
+                  textAlign: "center",
+                }}
+              >
+                Question: {randomQuestionData?.data?.question}
+              </p>
             </div>
-          );
-        })}
-      </div>
-      <div className="flex justify-content-between">
-        <button className="nav-btn my-4 py-2 status-btn" onClick={handleCancel}>
-          Cancel
-        </button>
-        {isLastQuestion ? (
-          <button
-            className="green-btn green-button-shadow py-2"
-            onClick={handleFinish}
-          >
-            Finish
-          </button>
-        ) : (
-          <button
-            disabled={!activeButtonId}
-            className="green-btn green-button-shadow py-2"
-            onClick={handleNextBtn}
-          >
-            Next
-          </button>
-        )}
-      </div>
-      {activeButtonId && activeButtonId === correctAnswerId && <GreatAlert />}
-      {activeButtonId && activeButtonId !== correctAnswerId && (
-        <WrongAlert title={correctAnswer?.text} />
+          )}
+
+          <div className="d-flex flex-column justify-content-center">
+            {randomQuestionData?.data?.answers?.map((elem, index) => (
+              <div className="" key={index}>
+                <button
+                  disabled={activeButtonId}
+                  onClick={() => handleButtonClick(elem?._id)}
+                  style={{
+                    textAlign: "start",
+                    border: "none",
+                    borderRadius: "8px",
+                    backgroundColor:
+                      activeButtonId === elem?._id
+                        ? correctAnswerId === elem?._id
+                          ? "#54C999"
+                          : "red"
+                        : "white",
+                    color:
+                      activeButtonId === elem?._id
+                        ? correctAnswerId === elem?._id
+                          ? "white"
+                          : "white"
+                        : "black",
+                    padding: "8px",
+                    width: "48rem",
+                    marginTop: "20px",
+                    boxShadow: "0px 1.5px 0px 4px #ececec",
+                    // pointerEvents: apiStatus ? "none" : "auto",
+                  }}
+                >
+                  {elem?.text}
+                </button>
+              </div>
+            ))}
+          </div>
+          {randomQuestionData?.data && (
+            <div className="flex justify-content-between">
+              <button
+                className="nav-btn my-4 py-2 status-btn"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+              {isLastQuestion ? (
+                <button
+                  className="green-btn green-button-shadow py-2"
+                  onClick={handleFinish}
+                >
+                  Finish
+                </button>
+              ) : (
+                <button
+                  disabled={!activeButtonId}
+                  className="green-btn green-button-shadow py-2"
+                  onClick={handleNextBtn}
+                >
+                  Next
+                </button>
+              )}
+            </div>
+          )}
+          {activeButtonId && activeButtonId === correctAnswerId && (
+            <GreatAlert />
+          )}
+          {activeButtonId && activeButtonId !== correctAnswerId && (
+            <WrongAlert title={correctAnswer?.text} />
+          )}
+        </>
+      ) : (
+        <div
+          className="text-center d-flex justify-content-center align-items-center "
+          style={{ height: "80vh" }}
+        >
+          <QuizSkeleton />
+        </div>
       )}
+      {!randomQuestionLoading &&
+        !randomContextLoading &&
+        !correctAnswerId &&
+        !activeButtonId &&
+        !randomQuestionData?.data && (
+          <div>
+            <NoData text="Sorry No Context Found!" />
+          </div>
+        )}
     </div>
   );
 };

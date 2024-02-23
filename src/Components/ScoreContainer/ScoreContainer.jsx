@@ -7,7 +7,8 @@ import Table from "../Table/Table.jsx";
 import badge1 from "../../assets/badge1.png";
 import badge2 from "../../assets/badge2.png";
 import badge3 from "../../assets/badge3.png";
-function ScoreContainer({ data }) {
+function ScoreContainer({ data, loading }) {
+  console.log(data);
   const column = [
     {
       title: "Image",
@@ -30,7 +31,7 @@ function ScoreContainer({ data }) {
       dataIndex: "rank",
     },
   ];
-  const formatedData = data?.data?.map((data, index) => {
+  const formatedData = data?.map((data, index) => {
     return {
       image: (
         <img
@@ -105,10 +106,17 @@ function ScoreContainer({ data }) {
       ),
     };
   });
+
   return (
     <>
       <div className="container">
-        <Table column={column} data={formatedData} />
+        <Table
+          loading={loading}
+          column={column}
+          data={formatedData}
+          total={data?.length}
+          pageSize={10}
+        />
       </div>
     </>
   );

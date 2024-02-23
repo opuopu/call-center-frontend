@@ -25,7 +25,6 @@ function MyProfileComp() {
   const { _id } = useAppSelector(useCurrentUser) || {};
   const { data: profileData } = useProfileQuery(_id);
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
-
   const [form] = Form.useForm();
   const handleModal = () => {
     setModal((prev) => !prev);
@@ -110,11 +109,13 @@ function MyProfileComp() {
             }
             alt=""
           />
-          <Uplaod
-            setSelectedFile={setFile}
-            disabled={edit}
-            text="Click on the edit button to upload."
-          />
+          {!edit && (
+            <Uplaod
+              setSelectedFile={setFile}
+              disabled={edit}
+              text="Click on the edit button to upload."
+            />
+          )}
         </div>
 
         <Form

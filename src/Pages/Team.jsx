@@ -176,7 +176,12 @@ function Team() {
             </div>
             <div className="row">
               <div className="col">
-                <Table column={column} data={data} />
+                <Table
+                  column={column}
+                  data={data}
+                  total={usersData?.data?.length}
+                  pageSize={10}
+                />
               </div>
             </div>
           </div>

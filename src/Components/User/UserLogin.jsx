@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Button, Checkbox, Form, Input } from "antd";
 import Swal from "sweetalert2";
 import "./User.css";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useSignInMutation } from "../../Redux/api/authApi";
 import { setUser, useCurrentUser } from "../../Redux/features/auth/authSlice";
 import { useAppSelector } from "../../Redux/hooks.js";
+import CustomModal from "../UI/Modal.jsx";
+import ForgetPasswordForm from "../ForgetPasswordForm/ForgetPasswordForm.jsx";
 
 function UserLogin() {
   const dispatch = useDispatch();
@@ -14,7 +16,7 @@ function UserLogin() {
   const { role } = useAppSelector(useCurrentUser) || {};
   const Navigate = useNavigate();
   const location = useLocation();
-
+  const [modal, setModal] = useState(false);
   const [inputData, setInputData] = useState({
     email: "",
     password: "",
@@ -59,8 +61,21 @@ function UserLogin() {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 
+  const handleModal = () => {
+    setModal((prev) => !prev);
+  };
+
   return (
     <>
+      {modal && (
+        <CustomModal
+          showModal={modal}
+          setShowModal={setModal}
+          title="Forget Password"
+        >
+          <ForgetPasswordForm setShowModal={setModal} />
+        </CustomModal>
+      )}
       <div style={{ height: "90vh" }} className="d-flex align-items-center">
         <div
           // onSubmit={newHandleClick}
@@ -86,6 +101,18 @@ function UserLogin() {
             type="password"
             value={inputData?.password}
           />
+          <button
+            onClick={handleModal}
+            className="mt-2"
+            style={{
+              color: "gray",
+              cursor: "pointer",
+              border: "none",
+              background: "none",
+            }}
+          >
+            Forget Password?
+          </button>
           <button
             className="nav-btn green-button-shadow py-2 my-3"
             onClick={(e) => {

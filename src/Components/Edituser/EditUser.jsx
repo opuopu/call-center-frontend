@@ -10,7 +10,7 @@ import {
 const EditUser = ({ setShowModal, id }) => {
   const [updateUser, { isLoading }] = useUpdateUserByManagerMutation();
   const { data: profileData } = useSingleUserQuery(id);
-  console.log(profileData);
+
   const [form] = Form.useForm();
 
   useEffect(() => {

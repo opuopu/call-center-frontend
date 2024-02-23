@@ -44,7 +44,8 @@ const LayoutHeader = () => {
     <Header
       style={{
         position: "sticky",
-        zIndex: 0,
+        top: 0,
+        zIndex: 99,
         background: "white",
         display: "flex",
         justifyContent: "space-between",
