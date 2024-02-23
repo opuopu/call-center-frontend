@@ -21,6 +21,7 @@ code {
 /* Styles for screens under or equal to 1500px when collapsed */
 @media (max-width: 1800px) {
   .responsive-content.collapsed {
-    padding-left: 180px;
+    padding-left: 270px;
+    padding-right: 60px;
   }
 }
