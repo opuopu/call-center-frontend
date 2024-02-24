@@ -1,7 +1,5 @@
 import React from "react";
 import "./MoodQuestion.css";
-import SpeakerContainer from "../SpeakerContainer/SpeakerContainer";
-import SoundWaves from "../../assets/sound-waves 2.png";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Popover } from "antd";
@@ -50,15 +48,6 @@ function MoodQuestion(props) {
               </Popover>
             </div>
             <div className="d-flex justify-content-around align-items-center mood-review mt-4">
-              {/* <button
-          className={`${
-            props.moodStatus === "success"
-              ? "green-btn green-button-shadow answer-correct-box "
-              : "gray-shadow-btn my-2"
-          } `}
-        >
-          Normal
-        </button> */}
               {da?.options.map((option) => (
                 <>
                   <button
