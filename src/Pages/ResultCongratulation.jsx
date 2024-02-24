@@ -1,7 +1,7 @@
 import React from "react";
 import Star from "../assets/Vector.png";
 
-import {useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useCalculateTotalScoresQuery } from "../Redux/api/userResponseApi.js";
 import Swal from "sweetalert2";
 import { useAppDispatch, useAppSelector } from "../Redux/hooks.js";
@@ -34,7 +34,7 @@ function ResultCongratulation() {
       }
     });
   };
-  
+
   return (
     <>
       <div
@@ -63,7 +63,15 @@ function ResultCongratulation() {
                   {" "}
                   <span>{selectedQuiz?.score}</span> /100
                 </span> */}
-                <span>{scoreData?.data?.totalScore}</span>
+                <span
+                  style={{
+                    color: "#54C999",
+                    fontSize: "18px",
+                    fontWeight: "600",
+                  }}
+                >
+                  {scoreData?.data?.totalScore}
+                </span>
               </div>
               <div className="congratulation-btn-container d-flex justify-content-around align-items-center w-100 my-2 flex-wrap">
                 {/* <button className="green-btn green-button-shadow">

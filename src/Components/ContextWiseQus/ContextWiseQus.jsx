@@ -71,14 +71,14 @@ const ContextWiseQus = () => {
       answerId: answerId,
       contextId: id,
     };
+    dispatch(incrementProgress(perQuestionProgress));
     try {
       const res = await submitAnswer(data).unwrap();
       if (res?.success) {
-        dispatch(incrementProgress(perQuestionProgress));
         dispatch(setTotalAnswers(1));
         dispatch(settotalScores(res?.data?.score));
       }
-    } catch (error) { }
+    } catch (error) {}
   };
   const handleNextBtn = async () => {
     refetch();
@@ -209,11 +209,23 @@ const ContextWiseQus = () => {
               ) : (
                 <button
                   disabled={!activeButtonId}
-                  className={`green-btn py-2 ${activeButtonId ? 'green-button-shadow' : 'gray-button-shadow'}`}
+                  className={`green-btn py-2 ${
+                    activeButtonId
+                      ? "green-button-shadow"
+                      : "gray-button-shadow"
+                  }`}
                   // className="green-btn green-button-shadow py-2"
                   // className={`green-btn green-button-shadow py-2 ${!activeButtonId ? 'disabled-btn' : ''}`}
-                  style={activeButtonId ? {} : { backgroundColor: '#4ebb8ead', boxShadow: 'gray-button-shadow', color: 'white', cursor: 'not-allowed' }}
-
+                  style={
+                    activeButtonId
+                      ? {}
+                      : {
+                          backgroundColor: "#4ebb8ead",
+                          boxShadow: "gray-button-shadow",
+                          color: "white",
+                          cursor: "not-allowed",
+                        }
+                  }
                   onClick={handleNextBtn}
                 >
                   Next

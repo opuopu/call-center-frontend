@@ -3,15 +3,20 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 const QuizSkeleton = () => {
   return (
-    <div className="container w-50">
-      <div>
-        <div className="">
-          <Skeleton />
-          {/* <Skeleton circle height={30} width={30} /> */}
-        </div>
+    <div className="container w-50 mx-auto">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Skeleton width={800} />
+        {/* <Skeleton circle height={30} width={30} /> */}
+
         <div className="mt-2">
-          <Skeleton height={20} width={600} />
-          <Skeleton height={20} width={600} className="mt-2" />
+          <Skeleton height={30} width={600} />
+          <Skeleton height={30} width={600} className="mt-2" />
         </div>
 
         <div className="mt-5">

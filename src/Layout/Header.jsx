@@ -23,6 +23,21 @@ const LayoutHeader = () => {
   };
   const items = [
     {
+      key: "0",
+      label: (
+        <p
+          style={{
+            marginBottom: "0px",
+            paddingBottom: "0px",
+            textAlign: "center",
+            fontWeight: "600",
+          }}
+        >
+          {profileData?.data?.role.toUpperCase()}
+        </p>
+      ),
+    },
+    {
       key: "1",
       label: (
         <button
