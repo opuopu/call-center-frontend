@@ -1,5 +1,5 @@
 const ImageGenerator = (url) => {
-  return url ? `${`http://165.227.211.138:3000`}${url}` : null;
+  return url ? `${`http://143.198.26.67:3000`}${url}` : null;
 };
 
 export default ImageGenerator;
