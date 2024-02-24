@@ -13,7 +13,8 @@ const ForgetPasswordForm = ({ setShowModal }) => {
         setShowModal((prev) => !prev);
       }
     } catch (err) {
-      swal.fire(err?.message, "", "error");   
+      console.log("Opu vai", err)
+      swal.fire(err?.data?.message, "", "error");
     }
   };
   return (

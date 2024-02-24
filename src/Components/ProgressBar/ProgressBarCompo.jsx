@@ -14,7 +14,7 @@ function ProgressBarCompo({ now, label }) {
           <div className='progress-parent mx-auto d-flex justify-content-center align-items-center'>
             <ProgressBar now={now} label={label} visuallyHidden className='progress-bar-span m-2' />
             {/* <ProgressBar now={now} label={`${now}%`} visuallyHidden className='progress-bar-span m-2' /> */}
-            <img src={CrossButton} alt="cross-btn" />
+            {/* <img src={CrossButton} alt="cross-btn" /> */}
           </div>
         </div>
 

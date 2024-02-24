@@ -38,15 +38,20 @@
 
 .green-button-shadow {
   box-shadow: 0px 5px 0px 0px #4ebb8e;
+  /* box-shadow: 0px 5px 0px 0px #4ebb8ead; */
+}
+
+.gray-button-shadow {
+  box-shadow: 0px 5px 0px 0px #607f73;
 }
 
 
 @media screen and (max-width:320px) {
-    .star-container-child{
-        width: 250px;
-    }
+  .star-container-child {
+    width: 250px;
+  }
 
-    .difficulty-para{
-        font-size: 22px;
-    }
+  .difficulty-para {
+    font-size: 22px;
+  }
 }

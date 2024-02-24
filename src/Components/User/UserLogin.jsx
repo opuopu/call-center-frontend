@@ -71,7 +71,7 @@ function UserLogin() {
         <CustomModal
           showModal={modal}
           setShowModal={setModal}
-          title="Forget Password"
+          title="Forgot Password"
         >
           <ForgetPasswordForm setShowModal={setModal} />
         </CustomModal>
@@ -93,7 +93,7 @@ function UserLogin() {
             value={inputData?.email}
           />
 
-          <label className="align-self-start user-label">password</label>
+          <label className="align-self-start user-label">Password</label>
           <input
             onChange={handleChange}
             name="password"
@@ -111,7 +111,7 @@ function UserLogin() {
               background: "none",
             }}
           >
-            Forget Password?
+            Forgot Password?
           </button>
           <button
             className="nav-btn green-button-shadow py-2 my-3"
