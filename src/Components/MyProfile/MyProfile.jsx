@@ -127,6 +127,7 @@ function MyProfileComp() {
           style={{}}
         >
           <Form.Item
+            rules={[{ required: true, message: "User Name Is Required" }]}
             key="userName"
             name="userName"
             label={<p className="m-0">User Name</p>}
@@ -134,6 +135,7 @@ function MyProfileComp() {
             <Input className="py-2 input" placeholder="enter user name" />
           </Form.Item>
           <Form.Item
+            rules={[{ required: true, message: "Full  Name Is Required" }]}
             key="name"
             name="name"
             label={<p className="m-0">Full Name</p>}
@@ -142,6 +144,7 @@ function MyProfileComp() {
           </Form.Item>
 
           <Form.Item
+            rules={[{ required: true, message: "Email Is Required" }]}
             key="email"
             name="email"
             label={<p className="m-0">Email</p>}
