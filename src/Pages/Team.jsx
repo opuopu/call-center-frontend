@@ -11,6 +11,7 @@ import CreateUser from "../Components/CreateUser/CreateUser.jsx";
 import { AiOutlineClose, AiOutlineCheck, AiFillEdit } from "react-icons/ai";
 import Swal from "sweetalert2";
 import EditUser from "../Components/Edituser/EditUser.jsx";
+import CustomTooltip from "../Components/UI/CustomTooltip.jsx";
 function Team() {
   const { data: usersData } = useRetrivemangerUsersQuery(undefined);
   const [changeStatus] = useChangeUserStatusMutation();
@@ -22,20 +23,29 @@ function Team() {
     setId(id);
     setmodal2((prev) => !prev);
   };
-  const handleActiveUser = async (id, status) => {
+  const handleActiveUser = async (id) => {
     try {
-      const res = await changeStatus({ id: id, body: { status } }).unwrap();
+      const res = await changeStatus({
+        id: id,
+        body: { status: "active" },
+      }).unwrap();
+      console.log(res);
       if (res?.success) {
-        Swal.fire(res?.message, "", "success");
+        Swal.fire("User Activated Successfully", "", "success");
       }
     } catch (err) {
       Swal.fire(err?.data?.message, "", "error");
     }
   };
-  const handleDisableUser = async (id, status) => {
+  const handleDisableUser = async (id) => {
     try {
-      const res = await changeStatus({ id: id, body: { status } }).unwrap();
-      Swal.fire(res?.message, "", "success");
+      const res = await changeStatus({
+        id: id,
+        body: { status: "disabled" },
+      }).unwrap();
+      if (res?.success) {
+        Swal.fire("User Disabled Successfully", "", "success");
+      }
     } catch (err) {
       Swal.fire(err?.data?.message, "", "error");
     }
@@ -67,42 +77,42 @@ function Team() {
       key: "status",
       dataIndex: "status",
     },
-    {
-      title: "Actions",
-      render: (data) => {
-        return (
-          <div className="d-flex gap-2 ">
-            {data?.status2 === "disabled" ? (
-              <span>
-                <AiOutlineCheck
-                  title="active user"
-                  onClick={() => handleActiveUser(data?.id, "active")}
-                  style={{
-                    color: "#54C999",
-                    fontWeight: "600",
-                    fontSize: "18px",
-                    cursor: "pointer",
-                  }}
-                />
-              </span>
-            ) : (
-              <span>
-                <AiOutlineClose
-                  title="disable user"
-                  onClick={() => handleDisableUser(data?.id, "disabled")}
-                  style={{
-                    color: "red",
-                    fontWeight: "600",
-                    fontSize: "18px",
-                    cursor: "pointer",
-                  }}
-                />
-              </span>
-            )}
-          </div>
-        );
-      },
-    },
+    // {
+    //   title: "Actions",
+    //   render: (data) => {
+    //     return (
+    //       <div className="d-flex gap-2 ">
+    //         {data?.status2 === "disabled" ? (
+    //           <span>
+    //             <AiOutlineCheck
+    //               title="active user"
+    //               onClick={() => handleActiveUser(data?.id, "active")}
+    //               style={{
+    //                 color: "#54C999",
+    //                 fontWeight: "600",
+    //                 fontSize: "18px",
+    //                 cursor: "pointer",
+    //               }}
+    //             />
+    //           </span>
+    //         ) : (
+    //           <span>
+    //             <AiOutlineClose
+    //               title="disable user"
+    //               onClick={() => handleDisableUser(data?.id, "disabled")}
+    //               style={{
+    //                 color: "red",
+    //                 fontWeight: "600",
+    //                 fontSize: "18px",
+    //                 cursor: "pointer",
+    //               }}
+    //             />
+    //           </span>
+    //         )}
+    //       </div>
+    //     );
+    //   },
+    // },
     {
       title: "Edit",
       render: (data) => {
@@ -130,23 +140,48 @@ function Team() {
       id: user?._id,
       userName: user?.userName,
       email: user?.email,
-      status: (
-        <p
-          style={{
-            backgroundColor: user.status === "active" ? "#54C999" : "#DC3545",
-            margin: "auto 0",
-            color: "#fff",
-            textAlign: "center",
-            borderRadius: "5px",
-            // padding: "5px 10px",
-          }}
-        >
-          {user.status}
-        </p>
-      ),
+      status:
+        user?.status === "active" ? (
+          <CustomTooltip text="click to disable user" placement="bottom">
+            <button
+              onClick={() => handleDisableUser(user?._id)}
+              style={{
+                backgroundColor: "#54C999",
+                margin: "auto 0",
+                border: "none",
+                padding: "0 24px",
+                color: "#fff",
+                textAlign: "center",
+                borderRadius: "5px",
+                // padding: "5px 10px",
+              }}
+            >
+              {user.status}
+            </button>
+          </CustomTooltip>
+        ) : (
+          <CustomTooltip text="click to activate user" placement="bottom">
+            <button
+              onClick={() => handleActiveUser(user?._id)}
+              style={{
+                backgroundColor: "#DC3545",
+                margin: "auto 0",
+                border: "none",
+                padding: "0 16px",
+                color: "#fff",
+                textAlign: "center",
+                borderRadius: "5px",
+                // padding: "5px 10px",
+              }}
+            >
+              {user.status}
+            </button>
+          </CustomTooltip>
+        ),
       status2: user?.status,
     };
   });
+
   return (
     <>
       {modal && (
