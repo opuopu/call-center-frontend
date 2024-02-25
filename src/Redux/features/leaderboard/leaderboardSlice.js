@@ -14,7 +14,12 @@ const leaderBoardSlice = createSlice({
     setTotalScors: (state, action) => {
       state.scores = action.payload;
     },
+    resetleaderboardSlice: (state, action) => {
+      state.contextId = null;
+      state.scores = null;
+    },
   },
 });
-export const { setContext, setTotalScors } = leaderBoardSlice.actions;
+export const { setContext, setTotalScors, resetleaderboardSlice } =
+  leaderBoardSlice.actions;
 export default leaderBoardSlice.reducer;

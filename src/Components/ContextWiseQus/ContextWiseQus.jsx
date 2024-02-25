@@ -16,6 +16,7 @@ import {
   useInserUserResponseMutation,
 } from "../../Redux/api/userResponseApi.js";
 import {
+  resetAllQuestionSlices,
   resetIds,
   setActiveButtonId,
   setCorrectAnswerId,
@@ -25,6 +26,7 @@ import {
 import {
   calculatePerProgress,
   incrementProgress,
+  resetAllQuizSlices,
 } from "../../Redux/features/quiz/QuizSlice.js";
 import { useInsertDataIntoLeaderboardMutation } from "../../Redux/api/leaderboardApi.js";
 import NoData from "../NoData/NoData.jsx";
@@ -33,6 +35,7 @@ import GreatAlert from "../GreatAlert/GreatAlert.jsx";
 import WrongAlert from "../WrongAlert/WrongAlert.jsx";
 import "react-loading-skeleton/dist/skeleton.css";
 import QuizSkeleton from "../QuizSkeleton/QuizSkeleton.jsx";
+import { resetleaderboardSlice } from "../../Redux/features/leaderboard/leaderboardSlice.js";
 
 const ContextWiseQus = () => {
   const { data: randomContextData, isLoading: randomContextLoading } =
@@ -88,6 +91,7 @@ const ContextWiseQus = () => {
     const formatedData = {
       contextId: id,
     };
+
     try {
       const res = await insertLeaderBoardData(formatedData).unwrap();
       if (res?.success) {
@@ -112,6 +116,7 @@ const ContextWiseQus = () => {
         try {
           const res = await deleteResponse(id).unwrap();
           if (res?.success) {
+            dispatch({ type: "RESET_ALL_SLICES" });
             Swal.fire({
               title: "Deleted!",
               text: `${res?.message}`,

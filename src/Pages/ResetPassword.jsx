@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 import ResetPasswordForm from "../Components/PasswordResetForm/PasswordResetForm.jsx";
 import { useAppDispatch } from "../Redux/hooks.js";
 import { setUser } from "../Redux/features/auth/authSlice.js";
-
 const ResetPassword = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
