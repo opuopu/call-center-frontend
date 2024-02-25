@@ -21,11 +21,13 @@ import Loading from "../../utils/Loading.jsx";
 function MyProfileComp() {
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(true);
-  const { setFile, imageUrl, imageFile } = useImageUpload();
+  const { setFile, imageUrl, imageFile, setImageUrl } = useImageUpload();
+  console.log(imageUrl);
   const { _id } = useAppSelector(useCurrentUser) || {};
   const { data: profileData } = useProfileQuery(_id);
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
   const [form] = Form.useForm();
+
   const handleModal = () => {
     setModal((prev) => !prev);
   };
@@ -44,10 +46,6 @@ function MyProfileComp() {
     }
   };
 
-  const handleEditStatus = (e) => {
-    e.preventDefault();
-    setEdit((prev) => !prev);
-  };
   // set default value
   useEffect(() => {
     form.setFieldsValue({
@@ -63,6 +61,12 @@ function MyProfileComp() {
     profileData?.data?.userName,
     profileData?.data?.image,
   ]);
+  const handleEditStatus = (e) => {
+    e.preventDefault();
+    setEdit((prev) => !prev);
+    form.setFieldsValue(profileData?.data);
+    setImageUrl(null);
+  };
   return (
     <div className="container">
       {modal && (
@@ -124,7 +128,6 @@ function MyProfileComp() {
           onFinish={onFinish}
           form={form}
           className="w-75 shadow-sm p-4"
-          style={{}}
         >
           <Form.Item
             rules={[{ required: true, message: "User Name Is Required" }]}
@@ -132,7 +135,7 @@ function MyProfileComp() {
             name="userName"
             label={<p className="m-0">User Name</p>}
           >
-            <Input className="py-2 input" placeholder="enter user name" />
+            <Input className="py-2 input" placeholder="Enter User Name" />
           </Form.Item>
           <Form.Item
             rules={[{ required: true, message: "Full  Name Is Required" }]}
@@ -140,7 +143,7 @@ function MyProfileComp() {
             name="name"
             label={<p className="m-0">Full Name</p>}
           >
-            <Input className="py-2 input" placeholder="enter full Name" />
+            <Input className="py-2 input" placeholder="Enter Full Name" />
           </Form.Item>
 
           <Form.Item
@@ -149,7 +152,7 @@ function MyProfileComp() {
             name="email"
             label={<p className="m-0">Email</p>}
           >
-            <Input className="py-2 input" placeholder="enter email" />
+            <Input className="py-2 input" placeholder="Enter Email" />
           </Form.Item>
           <Form.Item className="d-flex  justify-content-end">
             {edit ? (
