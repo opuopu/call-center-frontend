@@ -49,7 +49,7 @@ const ContextWiseQus = () => {
     refetch,
     isLoading: randomQuestionLoading,
   } = useGetRandomQestionsQuery(id);
-  const [submitAnswer] = useInserUserResponseMutation();
+  const [submitAnswer, { isSuccess }] = useInserUserResponseMutation();
   const [deleteResponse] = useDeleteResponsesMutation();
   const [insertLeaderBoardData, { isLoading }] =
     useInsertDataIntoLeaderboardMutation();
@@ -69,12 +69,13 @@ const ContextWiseQus = () => {
 
   const handleButtonClick = async (answerId) => {
     dispatch(setActiveButtonId(answerId));
+    dispatch(incrementProgress(perQuestionProgress));
     const data = {
       questionId: randomQuestionData?.data?._id,
       answerId: answerId,
       contextId: id,
     };
-    dispatch(incrementProgress(perQuestionProgress));
+
     try {
       const res = await submitAnswer(data).unwrap();
       if (res?.success) {
@@ -102,6 +103,8 @@ const ContextWiseQus = () => {
       console.log(err);
     }
   };
+
+  console.log("isSuccess", isSuccess);
   const handleCancel = async () => {
     Swal.fire({
       title: "Are you sure?",
@@ -166,7 +169,7 @@ const ContextWiseQus = () => {
             {randomQuestionData?.data?.answers?.map((elem, index) => (
               <div className="" key={index}>
                 <button
-                  disabled={activeButtonId}
+                  disabled={activeButtonId && isSuccess}
                   onClick={() => handleButtonClick(elem?._id)}
                   style={{
                     textAlign: "start",
