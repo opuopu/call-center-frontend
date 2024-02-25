@@ -35,11 +35,14 @@ import GreatAlert from "../GreatAlert/GreatAlert.jsx";
 import WrongAlert from "../WrongAlert/WrongAlert.jsx";
 import "react-loading-skeleton/dist/skeleton.css";
 import QuizSkeleton from "../QuizSkeleton/QuizSkeleton.jsx";
-import { resetleaderboardSlice } from "../../Redux/features/leaderboard/leaderboardSlice.js";
-
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import QuestionSkeleton from "../QuizSkeleton/QuestionSkeleton.jsx";
+import ButtonSkeletion from "../QuizSkeleton/ButtonSkeletion.jsx";
 const ContextWiseQus = () => {
   const { data: randomContextData, isLoading: randomContextLoading } =
     useGetRandomContextQuery(undefined);
+  const [loading, setloading] = useState(false);
   const id = randomContextData?.data?._id;
   const { role } = useAppSelector(useCurrentUser);
   const navigate = useNavigate();
@@ -51,8 +54,7 @@ const ContextWiseQus = () => {
   } = useGetRandomQestionsQuery(id);
   const [submitAnswer, { isSuccess }] = useInserUserResponseMutation();
   const [deleteResponse] = useDeleteResponsesMutation();
-  const [insertLeaderBoardData, { isLoading }] =
-    useInsertDataIntoLeaderboardMutation();
+  const [insertLeaderBoardData] = useInsertDataIntoLeaderboardMutation();
   const { data: totalQuestionsData } =
     useGetTotalQuestionsUnderContextQuery(id);
   const { data: signleQuizData } = useSingleQuizQuery(id);
@@ -66,8 +68,9 @@ const ContextWiseQus = () => {
     dispatch(setCorrectAnswerId(randomQuestionData?.data));
     dispatch(calculatePerProgress(totalQuestionsData?.data));
   }, [dispatch, randomQuestionData, totalQuestionsData]);
-
+  const [buttonClicked, setButtonClicked] = useState(false);
   const handleButtonClick = async (answerId) => {
+    setButtonClicked(true);
     dispatch(setActiveButtonId(answerId));
     dispatch(incrementProgress(perQuestionProgress));
     const data = {
@@ -86,7 +89,12 @@ const ContextWiseQus = () => {
   };
   const handleNextBtn = async () => {
     refetch();
+    setloading(true);
+    setTimeout(() => {
+      setloading(false);
+    }, 1000);
     dispatch(resetIds());
+    setButtonClicked(false);
   };
   const handleFinish = async () => {
     const formatedData = {
@@ -99,12 +107,9 @@ const ContextWiseQus = () => {
         dispatch({ type: "RESET_ALL_SLICES" });
         navigate(`/${role}/congratulations`, { state: { id: id } });
       }
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
-  console.log("isSuccess", isSuccess);
   const handleCancel = async () => {
     Swal.fire({
       title: "Are you sure?",
@@ -128,9 +133,7 @@ const ContextWiseQus = () => {
 
             navigate("/");
           }
-        } catch (err) {
-          console.log(err);
-        }
+        } catch (err) {}
       }
     });
   };
@@ -153,91 +156,105 @@ const ContextWiseQus = () => {
               >
                 Context: {signleQuizData?.data?.context}
               </p>
-              <p
-                style={{
-                  fontWeight: "400",
-                  fontSize: "22px",
-                  textAlign: "center",
-                }}
-              >
-                Question: {randomQuestionData?.data?.question}
-              </p>
+              {loading ? (
+                <Skeleton height={30} width={600} className="mt-2" />
+              ) : (
+                <p
+                  style={{
+                    fontWeight: "400",
+                    fontSize: "22px",
+                    textAlign: "center",
+                  }}
+                >
+                  Question: {randomQuestionData?.data?.question}
+                </p>
+              )}
             </div>
           )}
 
           <div className="d-flex flex-column justify-content-center">
-            {randomQuestionData?.data?.answers?.map((elem, index) => (
-              <div className="" key={index}>
-                <button
-                  disabled={activeButtonId && isSuccess}
-                  onClick={() => handleButtonClick(elem?._id)}
-                  style={{
-                    textAlign: "start",
-                    border: "none",
-                    borderRadius: "8px",
-                    backgroundColor:
-                      activeButtonId === elem?._id
-                        ? correctAnswerId === elem?._id
-                          ? "#54C999"
-                          : "red"
-                        : "white",
-                    color:
-                      activeButtonId === elem?._id
-                        ? correctAnswerId === elem?._id
-                          ? "white"
-                          : "white"
-                        : "black",
-                    padding: "8px",
-                    width: "48rem",
-                    marginTop: "20px",
-                    boxShadow: "0px 1.5px 0px 4px #ececec",
-                    // pointerEvents: apiStatus ? "none" : "auto",
-                  }}
-                >
-                  {elem?.text}
-                </button>
-              </div>
-            ))}
+            {loading ? (
+              <QuestionSkeleton />
+            ) : (
+              randomQuestionData?.data?.answers?.map((elem, index) => (
+                <div className="" key={index}>
+                  <button
+                    disabled={buttonClicked}
+                    onClick={() => handleButtonClick(elem?._id)}
+                    style={{
+                      textAlign: "start",
+                      border: "none",
+                      borderRadius: "8px",
+                      backgroundColor:
+                        activeButtonId === elem?._id
+                          ? correctAnswerId === elem?._id
+                            ? "#54C999"
+                            : "red"
+                          : "white",
+                      color:
+                        activeButtonId === elem?._id
+                          ? correctAnswerId === elem?._id
+                            ? "white"
+                            : "white"
+                          : "black",
+                      padding: "8px",
+                      width: "48rem",
+                      marginTop: "20px",
+                      boxShadow: "0px 1.5px 0px 4px #ececec",
+                      // pointerEvents: apiStatus ? "none" : "auto",
+                    }}
+                  >
+                    {elem?.text}
+                  </button>
+                </div>
+              ))
+            )}
           </div>
-          {randomQuestionData?.data && (
-            <div className="flex justify-content-between">
-              <button
-                className="nav-btn my-4 py-2 status-btn"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-              {isLastQuestion ? (
-                <button
-                  className="green-btn green-button-shadow py-2"
-                  onClick={handleFinish}
-                >
-                  Finish
-                </button>
-              ) : (
-                <button
-                  disabled={!activeButtonId}
-                  className={`green-btn py-2 ${
-                    activeButtonId
-                      ? "green-button-shadow"
-                      : "gray-button-shadow"
-                  }`}
-                  // className="green-btn green-button-shadow py-2"
-                  // className={`green-btn green-button-shadow py-2 ${!activeButtonId ? 'disabled-btn' : ''}`}
-                  style={
-                    activeButtonId
-                      ? {}
-                      : {
-                          backgroundColor: "#4ebb8ead",
-                          boxShadow: "gray-button-shadow",
-                          color: "white",
-                          cursor: "not-allowed",
-                        }
-                  }
-                  onClick={handleNextBtn}
-                >
-                  Next
-                </button>
+          {loading ? (
+            <ButtonSkeletion />
+          ) : (
+            <div>
+              {randomQuestionData?.data && (
+                <div className="flex justify-content-between">
+                  <button
+                    className="nav-btn my-4 py-2 status-btn"
+                    onClick={handleCancel}
+                  >
+                    Cancel
+                  </button>
+                  {isLastQuestion ? (
+                    <button
+                      className="green-btn green-button-shadow py-2"
+                      onClick={handleFinish}
+                    >
+                      Finish
+                    </button>
+                  ) : (
+                    <button
+                      disabled={!activeButtonId}
+                      className={`green-btn py-2 ${
+                        activeButtonId
+                          ? "green-button-shadow"
+                          : "gray-button-shadow"
+                      }`}
+                      // className="green-btn green-button-shadow py-2"
+                      // className={`green-btn green-button-shadow py-2 ${!activeButtonId ? 'disabled-btn' : ''}`}
+                      style={
+                        activeButtonId
+                          ? {}
+                          : {
+                              backgroundColor: "#4ebb8ead",
+                              boxShadow: "gray-button-shadow",
+                              color: "white",
+                              cursor: "not-allowed",
+                            }
+                      }
+                      onClick={handleNextBtn}
+                    >
+                      Next
+                    </button>
+                  )}
+                </div>
               )}
             </div>
           )}
