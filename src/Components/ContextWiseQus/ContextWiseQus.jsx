@@ -15,8 +15,9 @@ import {
   useDeleteResponsesMutation,
   useInserUserResponseMutation,
 } from "../../Redux/api/userResponseApi.js";
+import { FaArrowRight } from "react-icons/fa6";
+
 import {
-  resetAllQuestionSlices,
   resetIds,
   setActiveButtonId,
   setCorrectAnswerId,
@@ -26,7 +27,6 @@ import {
 import {
   calculatePerProgress,
   incrementProgress,
-  resetAllQuizSlices,
 } from "../../Redux/features/quiz/QuizSlice.js";
 import { useInsertDataIntoLeaderboardMutation } from "../../Redux/api/leaderboardApi.js";
 import NoData from "../NoData/NoData.jsx";
@@ -52,7 +52,7 @@ const ContextWiseQus = () => {
     refetch,
     isLoading: randomQuestionLoading,
   } = useGetRandomQestionsQuery(id);
-  const [submitAnswer, { isSuccess }] = useInserUserResponseMutation();
+  const [submitAnswer, { isLoading }] = useInserUserResponseMutation();
   const [deleteResponse] = useDeleteResponsesMutation();
   const [insertLeaderBoardData] = useInsertDataIntoLeaderboardMutation();
   const { data: totalQuestionsData } =
@@ -69,6 +69,7 @@ const ContextWiseQus = () => {
     dispatch(calculatePerProgress(totalQuestionsData?.data));
   }, [dispatch, randomQuestionData, totalQuestionsData]);
   const [buttonClicked, setButtonClicked] = useState(false);
+
   const handleButtonClick = async (answerId) => {
     setButtonClicked(true);
     dispatch(setActiveButtonId(answerId));
@@ -89,6 +90,7 @@ const ContextWiseQus = () => {
   };
   const handleNextBtn = async () => {
     refetch();
+
     setloading(true);
     setTimeout(() => {
       setloading(false);
@@ -139,7 +141,6 @@ const ContextWiseQus = () => {
   };
   const isLastQuestion =
     totalQuestionsData?.data?.result?.length === totalAnswers;
-
   return (
     <div className="text-center">
       {!randomQuestionLoading && !randomContextLoading ? (
@@ -215,40 +216,49 @@ const ContextWiseQus = () => {
           ) : (
             <div>
               {randomQuestionData?.data && (
-                <div className="flex justify-content-between">
+                <div className="flex justify-content-between my-4 gap-4">
                   <button
-                    className="nav-btn my-4 py-2 status-btn"
+                    style={{
+                      color: "white",
+                      fontWeight: "600",
+                      backgroundColor: "#063B6D",
+                      marginRight: "10px",
+                      border: "none",
+                      padding: "10px 30px",
+                      borderRadius: "4px",
+                    }}
                     onClick={handleCancel}
                   >
                     Cancel
                   </button>
                   {isLastQuestion ? (
                     <button
-                      className="green-btn green-button-shadow py-2"
+                      style={{
+                        color: "white",
+                        fontWeight: "600",
+                        backgroundColor: "#54C999",
+
+                        border: "none",
+                        padding: "10px 30px",
+                        borderRadius: "4px",
+                      }}
                       onClick={handleFinish}
                     >
                       Finish
                     </button>
                   ) : (
                     <button
-                      disabled={!activeButtonId}
-                      className={`green-btn py-2 ${
-                        activeButtonId
-                          ? "green-button-shadow"
-                          : "gray-button-shadow"
-                      }`}
-                      // className="green-btn green-button-shadow py-2"
-                      // className={`green-btn green-button-shadow py-2 ${!activeButtonId ? 'disabled-btn' : ''}`}
-                      style={
-                        activeButtonId
-                          ? {}
-                          : {
-                              backgroundColor: "#4ebb8ead",
-                              boxShadow: "gray-button-shadow",
-                              color: "white",
-                              cursor: "not-allowed",
-                            }
-                      }
+                      style={{
+                        color: "white",
+                        fontWeight: "600",
+                        backgroundColor:
+                          !activeButtonId || isLoading ? "#A9E3CB" : "#54C999",
+
+                        border: "none",
+                        padding: "10px 30px",
+                        borderRadius: "4px",
+                      }}
+                      disabled={!activeButtonId || isLoading || isLastQuestion}
                       onClick={handleNextBtn}
                     >
                       Next
