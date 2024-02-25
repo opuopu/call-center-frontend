@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Form, Input } from "antd";
+import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
+
 import Swal from "sweetalert2";
 import "./User.css";
 import { useDispatch } from "react-redux";
@@ -13,14 +14,16 @@ import ForgetPasswordForm from "../ForgetPasswordForm/ForgetPasswordForm.jsx";
 function UserLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { role } = useAppSelector(useCurrentUser) || {};
   const Navigate = useNavigate();
   const location = useLocation();
   const [modal, setModal] = useState(false);
+  const [eye, showEye] = useState(false);
   const [inputData, setInputData] = useState({
     email: "",
     password: "",
   });
+
+  console.log("=================================", eye);
 
   const [signInUser] = useSignInMutation();
 
@@ -94,13 +97,49 @@ function UserLogin() {
           />
 
           <label className="align-self-start user-label">Password</label>
-          <input
-            onChange={handleChange}
-            name="password"
-            className="user-input"
-            type="password"
-            value={inputData?.password}
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              onChange={handleChange}
+              name="password"
+              className="user-input"
+              type={eye ? "text" : "password"} // Toggle input type based on showPassword state
+              value={inputData.password}
+              style={{ paddingRight: "30px" }} // Adjust padding-right as needed
+            />
+            {/* Conditionally render eye icon based on showPassword state */}
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                right: "15px", // Adjust right as needed
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+              }}
+              // onClick={togglePasswordVisibility}
+            >
+              {eye ? (
+                <button
+                  style={{
+                    border: "none",
+                    backgroundColor: "white",
+                  }}
+                  onClick={() => showEye(false)} // Change to false to hide the password
+                >
+                  <FaRegEye />
+                </button>
+              ) : (
+                <button
+                  onClick={() => showEye(true)} // Change to true to show the password
+                  style={{
+                    border: "none",
+                    backgroundColor: "white",
+                  }}
+                >
+                  <FaRegEyeSlash />
+                </button>
+              )}
+            </div>
+          </div>
           <button
             onClick={handleModal}
             className="mt-2"

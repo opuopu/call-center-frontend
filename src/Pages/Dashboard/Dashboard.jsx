@@ -6,8 +6,13 @@ import { Container } from "react-bootstrap";
 const Dashboard = () => {
   const user = useAppSelector(useCurrentUser);
   return (
-    <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-      <h1 className="text-center" style={{ color: "#54C999" }}>Welcome Back, {user?.name}</h1>
+    <Container
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: "100vh" }}
+    >
+      <h1 className="text-center" style={{ color: "#54C999" }}>
+        Welcome Back, {user?.userName}
+      </h1>
     </Container>
   );
 };
