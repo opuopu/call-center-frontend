@@ -3,7 +3,7 @@ import { tagTypesList } from "../../types/tags";
 import { logout } from "../features/auth/authSlice.js";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://64.23.212.196:3000/api",
+  baseUrl: `${process.env.REACT_APP_BACKEND_URL}/api`,
   // credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
@@ -16,7 +16,6 @@ const baseQuery = fetchBaseQuery({
 
 const customizedBaseQuery = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-  console.log(result);
   if (result?.error?.status === 401) {
     result = await baseQuery(args, api, extraOptions);
     if (!result.data) {

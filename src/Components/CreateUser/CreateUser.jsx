@@ -44,12 +44,12 @@ const CreateUser = ({ setShowModal }) => {
               },
             ]}
           >
-            <Input placeholder="enter full name" className="py-2" />
+            <Input placeholder="Enter Full Name" className="py-2" />
           </Form.Item>
 
           <Form.Item
             className="col-lg-12"
-            label="Enter userName"
+            label="Enter User Name"
             name="userName"
             key="userName"
             rules={[
@@ -59,7 +59,7 @@ const CreateUser = ({ setShowModal }) => {
               },
             ]}
           >
-            <Input placeholder="enter user name" className="py-2" />
+            <Input placeholder="Enter User Name" className="py-2" />
           </Form.Item>
           <Form.Item
             className="col-lg-12"
@@ -73,7 +73,7 @@ const CreateUser = ({ setShowModal }) => {
               },
             ]}
           >
-            <Input placeholder="enter email" className="py-2" />
+            <Input placeholder="Enter Email" className="py-2" />
           </Form.Item>
 
           <Form.Item className="d-flex  justify-content-center">

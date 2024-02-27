@@ -39,6 +39,13 @@ const userResponseApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.QuestionSubmit, tagTypes.question],
     }),
+    ResetSession: builder.mutation({
+      query: () => ({
+        url: `/user-response/reset-session`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.QuestionSubmit, tagTypes.question],
+    }),
   }),
 });
 
@@ -48,4 +55,5 @@ export const {
   useRetrivemangerLeaderBoardQuery,
   useRetriveUserLeaderboardQuery,
   useDeleteResponsesMutation,
+  useResetSessionMutation,
 } = userResponseApi;

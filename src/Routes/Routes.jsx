@@ -10,6 +10,7 @@ import App from "../App.js";
 import ChangePassword from "../Pages/ChangePassword.jsx";
 import ResetPasswordForm from "../Components/PasswordResetForm/PasswordResetForm.jsx";
 import ResetPassword from "../Pages/ResetPassword.jsx";
+import ResetSessions from "../Pages/ResetSessions.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: <ResetPassword></ResetPassword>,
+  },
+  {
+    path: "/reset-session",
+    element: <ResetSessions />,
   },
   {
     path: "/manager",
