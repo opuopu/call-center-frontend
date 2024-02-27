@@ -29,21 +29,26 @@ import {
   incrementProgress,
 } from "../../Redux/features/quiz/QuizSlice.js";
 import { useInsertDataIntoLeaderboardMutation } from "../../Redux/api/leaderboardApi.js";
-import NoData from "../NoData/NoData.jsx";
 import { useCurrentUser } from "../../Redux/features/auth/authSlice.js";
 import GreatAlert from "../GreatAlert/GreatAlert.jsx";
 import WrongAlert from "../WrongAlert/WrongAlert.jsx";
 import "react-loading-skeleton/dist/skeleton.css";
 import QuizSkeleton from "../QuizSkeleton/QuizSkeleton.jsx";
+
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import QuestionSkeleton from "../QuizSkeleton/QuestionSkeleton.jsx";
 import ButtonSkeletion from "../QuizSkeleton/ButtonSkeletion.jsx";
+import ResetSessions from "../../Pages/ResetSessions.jsx";
+import Loading from "../../utils/Loading.jsx";
 const ContextWiseQus = () => {
   const { data: randomContextData, isLoading: randomContextLoading } =
     useGetRandomContextQuery(undefined);
+
   const [loading, setloading] = useState(false);
   const id = randomContextData?.data?._id;
+
+  console.log("id========================================", id);
   const { role } = useAppSelector(useCurrentUser);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -52,9 +57,11 @@ const ContextWiseQus = () => {
     refetch,
     isLoading: randomQuestionLoading,
   } = useGetRandomQestionsQuery(id);
+  console.log("random===============================", randomQuestionData);
   const [submitAnswer, { isLoading }] = useInserUserResponseMutation();
   const [deleteResponse] = useDeleteResponsesMutation();
-  const [insertLeaderBoardData] = useInsertDataIntoLeaderboardMutation();
+  const [insertLeaderBoardData, { isLoading: leaderBoardLoading }] =
+    useInsertDataIntoLeaderboardMutation();
   const { data: totalQuestionsData } =
     useGetTotalQuestionsUnderContextQuery(id);
   const { data: signleQuizData } = useSingleQuizQuery(id);
@@ -69,7 +76,6 @@ const ContextWiseQus = () => {
     dispatch(calculatePerProgress(totalQuestionsData?.data));
   }, [dispatch, randomQuestionData, totalQuestionsData]);
   const [buttonClicked, setButtonClicked] = useState(false);
-
   const handleButtonClick = async (answerId) => {
     setButtonClicked(true);
     dispatch(setActiveButtonId(answerId));
@@ -90,7 +96,6 @@ const ContextWiseQus = () => {
   };
   const handleNextBtn = async () => {
     refetch();
-
     setloading(true);
     setTimeout(() => {
       setloading(false);
@@ -106,6 +111,7 @@ const ContextWiseQus = () => {
     try {
       const res = await insertLeaderBoardData(formatedData).unwrap();
       if (res?.success) {
+        Swal.fire(res?.message, "", "success");
         dispatch({ type: "RESET_ALL_SLICES" });
         navigate(`/${role}/congratulations`, { state: { id: id } });
       }
@@ -244,7 +250,7 @@ const ContextWiseQus = () => {
                       }}
                       onClick={handleFinish}
                     >
-                      Finish
+                      {leaderBoardLoading ? <Loading /> : "Finish"}
                     </button>
                   ) : (
                     <button
@@ -283,15 +289,11 @@ const ContextWiseQus = () => {
           <QuizSkeleton />
         </div>
       )}
-      {!randomQuestionLoading &&
-        !randomContextLoading &&
-        !correctAnswerId &&
-        !activeButtonId &&
-        !randomQuestionData?.data && (
-          <div>
-            <NoData text="Sorry No Context Found!" />
-          </div>
-        )}
+      {!randomQuestionData?.data && (
+        <div>
+          <ResetSessions />
+        </div>
+      )}
     </div>
   );
 };

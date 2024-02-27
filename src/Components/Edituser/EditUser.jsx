@@ -58,16 +58,16 @@ const EditUser = ({ setShowModal, id }) => {
             rules={[
               {
                 required: true,
-                message: "FullName is required",
+                message: "Full Name is required",
               },
             ]}
           >
-            <Input placeholder="enter full name" className="py-2" />
+            <Input placeholder="Enter Full Name" className="py-2" />
           </Form.Item>
 
           <Form.Item
             className="col-lg-12"
-            label="Enter userName"
+            label="Enter User Name"
             name="userName"
             key="userName"
             rules={[

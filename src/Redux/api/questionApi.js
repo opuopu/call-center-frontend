@@ -15,18 +15,10 @@ const questionApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    GetRandomQestionsv2: builder.mutation({
-      query: (id) => ({
-        url: `/questions/random-question`,
-        method: "POST",
-      }),
-      invalidatesTags: [tagTypes.question, tagTypes.QuestionSubmit],
-    }),
   }),
 });
 
 export const {
   useGetRandomQestionsQuery,
   useGetTotalQuestionsUnderContextQuery,
-  useGetRandomQestionsv2Mutation,
 } = questionApi;

@@ -21,6 +21,11 @@ function ScoreContainer({ data, loading }) {
       dataIndex: "name",
     },
     {
+      title: "Role",
+      key: "role",
+      dataIndex: "role",
+    },
+    {
       title: "Score",
       key: "score",
       dataIndex: "score",
@@ -57,6 +62,7 @@ function ScoreContainer({ data, loading }) {
           {data?.userDetails?.name}
         </p>
       ),
+      role: data?.userDetails?.role,
       score: (
         <div className="d-flex gap-2">
           <span>
@@ -68,7 +74,7 @@ function ScoreContainer({ data, loading }) {
               fontSize: "16px",
             }}
           >
-            {data?.score}
+            {data?.totalScores}
           </p>
         </div>
       ),
