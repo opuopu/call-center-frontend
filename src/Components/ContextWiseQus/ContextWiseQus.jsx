@@ -156,9 +156,12 @@ const ContextWiseQus = () => {
               <ProgressBar now={progress} label={`${progress.toFixed(2)}%`} />
               <p
                 style={{
-                  fontWeight: "400",
+                  fontWeight: "600",
                   fontSize: "22px",
                   textAlign: "center",
+                  width: "75%",
+
+                  margin: "0 auto",
                 }}
               >
                 Context: {signleQuizData?.data?.context}
@@ -171,6 +174,7 @@ const ContextWiseQus = () => {
                     fontWeight: "400",
                     fontSize: "22px",
                     textAlign: "center",
+                    marginTop: "10px",
                   }}
                 >
                   Question: {randomQuestionData?.data?.question}
