@@ -3,7 +3,7 @@ import { tagTypesList } from "../../types/tags";
 import { logout } from "../features/auth/authSlice.js";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${process.env.REACT_APP_BACKEND_UR}/api`,
+  baseUrl: `http://64.227.136.143:3000/api`,
   // credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
